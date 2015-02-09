@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private static Thread thread;
 	public static boolean running = false;
 	private Keyboard key;
-	private JFrame frm;
+	private static JFrame frm;
 	Player player1,player2;
 
 	Graphics g;
@@ -47,7 +47,6 @@ public class Game extends Canvas implements Runnable {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 		screen = new Screen(width, height);
-		frm = new JFrame();
 		key = new Keyboard();
 		player1 = new Player1(0xffffff, key, screen, width / 2 - 4,
 				height / 2 - 4);
@@ -149,15 +148,15 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] args) {
 
 		Game game = new Game();
-		game.frm = new JFrame();
+		frm = new JFrame();
 		GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getScreenDevices()[0];
-		ge.setFullScreenWindow(game.frm);
-		game.frm.add(game);
-		game.frm.pack();
-		game.frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game.frm.setLocationRelativeTo(null);
-		game.frm.setVisible(true);
+		ge.setFullScreenWindow(frm);
+		frm.add(game);
+		frm.pack();
+		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frm.setLocationRelativeTo(null);
+		frm.setVisible(true);
 
 		game.start();
 		screen.clear();
