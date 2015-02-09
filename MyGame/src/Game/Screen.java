@@ -21,11 +21,11 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int color, int xspawn, int yspawn, int xOffset,
+	public void renderPlayer(int color,int xOffset,
 			int yOffset) {
 		for (int xb = 0; xb < 8; xb++) {
 			for (int yb = 0; yb < 8; yb++) {
-				pixels[xspawn + xOffset + xb + (yspawn + yOffset + yb) * width] = color;
+				pixels[xOffset + xb + (yOffset + yb) * width] = color;
 			}
 		}
 	}

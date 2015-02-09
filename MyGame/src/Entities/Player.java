@@ -13,8 +13,8 @@ public class Player {
 		this.key = key;
 		this.color = color;
 		this.screen = screen;
-		this.xspawn = xspawn;
-		this.yspawn = yspawn;
+		this.xOffset += xspawn;
+		this.yOffset += yspawn;
 	}
 
 	public void update() {
@@ -33,6 +33,6 @@ public class Player {
 	}
 
 	public void render() {
-		screen.renderPlayer(color, xspawn, yspawn, xOffset, yOffset);
+		screen.renderPlayer(color, xOffset, yOffset);
 	}
 }
