@@ -18,18 +18,7 @@ public class Player {
 	}
 
 	public void update() {
-		if (key.up) {
-			yOffset -= 2;
-		}
-		if (key.down) {
-			yOffset += 2;
-		}
-		if (key.left) {
-			xOffset -= 2;
-		}
-		if (key.right) {
-			xOffset += 2;
-		}
+	
 	}
 
 	public void render() {

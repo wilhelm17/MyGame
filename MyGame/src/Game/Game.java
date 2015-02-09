@@ -15,6 +15,8 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import Entities.Player;
+import Entities.Player1;
+import Entities.Player2;
 import Input.Keyboard;
 
 public class Game extends Canvas implements Runnable {
@@ -29,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	private Keyboard key;
 	private JFrame frm;
-	Player player1;
+	Player player1,player2;
 
 	Graphics g;
 	private static Screen screen;
@@ -47,7 +49,9 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frm = new JFrame();
 		key = new Keyboard();
-		player1 = new Player(0xffffff, key, screen, width / 2 - 4,
+		player1 = new Player1(0xffffff, key, screen, width / 2 - 4,
+				height / 2 - 4);
+		player2 = new Player2(0x000000, key, screen, width / 2 - 4,
 				height / 2 - 4);
 		this.setFocusable(true);
 		this.requestFocus();
@@ -108,7 +112,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		key.update();
 		player1.update();
-
+		player2.update();
 	}
 
 	public void render() {
@@ -123,6 +127,7 @@ public class Game extends Canvas implements Runnable {
 			screen.clear();
 		}
 		player1.render();
+		player2.render();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
