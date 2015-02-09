@@ -12,16 +12,16 @@ public class Player1 extends Player {
 
 	public void update() {
 		if (key.up1) {
-			yOffset -= 2;
+			yOffset -= 1;
 		}
 		if (key.down1) {
-			yOffset += 2;
+			yOffset += 1;
 		}
 		if (key.left1) {
-			xOffset -= 2;
+			xOffset -= 1;
 		}
 		if (key.right1) {
-			xOffset += 2;
+			xOffset += 1;
 		}
 	}
 
