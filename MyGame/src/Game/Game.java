@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -20,7 +21,8 @@ public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	public static int scale = 1;
-	public static int width = 1920 / scale;
+	public static int width = Toolkit.getDefaultToolkit().getScreenSize().width
+			/ scale;
 	public static int height = width / 16 * 9;
 
 	private static Thread thread;
@@ -154,5 +156,6 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 		screen.clear();
+		System.out.println(Toolkit.getDefaultToolkit().getScreenSize().width);
 	}
 }
