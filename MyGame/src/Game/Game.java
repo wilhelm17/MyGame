@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	private Keyboard key;
 	private static JFrame frm;
-	Player player1,player2;
+	Player player1, player2;
 
 	Graphics g;
 	private static Screen screen;
@@ -100,9 +100,6 @@ public class Game extends Canvas implements Runnable {
 		}
 		stop();
 	}
-
-	int x = 0;
-	int y = 0;
 
 	public void update() {
 		key.update();
