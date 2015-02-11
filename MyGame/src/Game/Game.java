@@ -53,7 +53,6 @@ public class Game extends Canvas implements Runnable {
 		player2 = new Player2(0x000000, key, screen, width / 2 - 4,
 				height / 2 - 4);
 		this.setFocusable(true);
-		this.requestFocus();
 		addKeyListener(key);
 	}
 
@@ -153,6 +152,5 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 		screen.clear();
-		System.out.println(width);
 	}
 }
