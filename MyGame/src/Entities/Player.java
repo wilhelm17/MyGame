@@ -13,7 +13,8 @@ public class Player {
 	double alpha = 0;
 	double beta = 0;
 
-	public Player(int color, Keyboard key, Screen screen, int xspawn, int yspawn , int width) {
+	public Player(int color, Keyboard key, Screen screen, int xspawn,
+			int yspawn, int width) {
 		this.key = key;
 		this.color = color;
 		this.screen = screen;
@@ -26,6 +27,6 @@ public class Player {
 	}
 
 	public void render() {
-		screen.renderPlayer(color,(int) xOffset,(int) yOffset);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset);
 	}
 }

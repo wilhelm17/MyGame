@@ -11,13 +11,13 @@ public class Player2 extends Player {
 	}
 
 	public void update() {
-		if(key.left2){
-			alpha-= 2;
+		if (key.left2) {
+			alpha -= 2;
 		}
-		if(key.right2){
-			alpha+= 2;
+		if (key.right2) {
+			alpha += 2;
 		}
-		beta = Math.toRadians(alpha);		
+		beta = Math.toRadians(alpha);
 		yOffset += 1 * Math.sin(beta);
 		xOffset += 1 * Math.cos(beta);
 	}
