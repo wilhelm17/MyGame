@@ -9,6 +9,8 @@ public class Player {
 	Screen screen;
 	int color, xspawn, yspawn;
 	double xOffset, yOffset;
+	double alpha = 0;
+	double beta = 0;
 
 	public Player(int color, Keyboard key, Screen screen, int xspawn, int yspawn) {
 		this.key = key;

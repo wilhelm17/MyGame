@@ -11,18 +11,15 @@ public class Player1 extends Player {
 	}
 
 	public void update() {
-		if (key.up1) {
-			yOffset -= 1;
+		if(key.right1){
+			alpha-= 2;
 		}
-		if (key.down1) {
-			yOffset += 1;
+		if(key.left1){
+			alpha+= 2;
 		}
-		if (key.left1) {
-			xOffset -= 1;
-		}
-		if (key.right1) {
-			xOffset += 1;
-		}
+		beta = Math.toRadians(alpha);		
+		yOffset += 1 * Math.sin(beta);
+		xOffset -= 1 * Math.cos(beta);
 	}
 
 }
