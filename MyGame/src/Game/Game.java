@@ -49,9 +49,8 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new Keyboard();
 		player1 = new Player1(0xffffff, key, screen, width / 2 - 4,
-				height / 2 - 4);
-		player2 = new Player2(0x000000, key, screen, width / 2 - 4,
-				height / 2 - 4);
+				height / 2 - 4, width);
+		player2 = new Player2(0x000000, key, screen, 0, 0, width);
 		this.setFocusable(true);
 		addKeyListener(key);
 	}

@@ -21,8 +21,7 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int color,int xOffset,
-			int yOffset) {
+	public void renderPlayer(int color, int xOffset, int yOffset) {
 		for (int xb = 0; xb < 8; xb++) {
 			for (int yb = 0; yb < 8; yb++) {
 				pixels[xOffset + xb + (yOffset + yb) * width] = color;
