@@ -6,8 +6,8 @@ import Input.Keyboard;
 public class Player2 extends Player {
 
 	public Player2(int color, Keyboard key, Screen screen, int xspawn,
-			int yspawn) {
-		super(color, key, screen, xspawn, yspawn);
+			int yspawn, int width) {
+		super(color, key, screen, xspawn, yspawn, width);
 	}
 
 	public void update() {
