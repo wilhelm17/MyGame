@@ -21,7 +21,6 @@ public class Player {
 	}
 
 	public void update() {
-	
 	}
 
 	public void render() {
