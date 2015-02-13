@@ -25,6 +25,10 @@ public class Screen {
 
 		for (int xb = 0; xb < 8; xb++) {
 			for (int yb = 0; yb < 8; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000
+						&& pixels[x + xb + (y + yb) * width] != color) {
+					p.moving = false;
+				}
 				pixels[x + xb + (y + yb) * width] = color;
 			}
 		}
