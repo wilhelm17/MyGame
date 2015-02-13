@@ -49,9 +49,10 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new Keyboard();
 		player1 = new Player1(0xE60EB0, key, screen, width / 2 - 4,
-				height / 2 - 4, width);
-		player2 = new Player2(0x1FDB44, key, screen, 20, 20, width);
+				height / 2 - 4);
+		player2 = new Player2(0x1FDB44, key, screen, 20, 20);
 		this.setFocusable(true);
+		this.requestFocus();
 		addKeyListener(key);
 	}
 
@@ -103,8 +104,6 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		player1.update();
 		player2.update();
-		player1.setMove(!key.pause);
-		player2.setMove(!key.pause);
 	}
 
 	public void render() {
@@ -132,11 +131,6 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(Color.white);
 			g.setFont(new Font("Arial", 0, 20));
 			g.drawString(fps + " fps", 20, 20);
-		}
-		if (key.pause) {
-			g.setColor(Color.white);
-			g.setFont(new Font("Arial", 0, 50));
-			g.drawString("Pause", width / 2 - 50, height / 2 - 25);
 		}
 
 		g.dispose();

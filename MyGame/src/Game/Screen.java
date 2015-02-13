@@ -1,11 +1,11 @@
 package Game;
 
+import Entities.Player;
+
 public class Screen {
 
 	public int width, height;
 	public int[] pixels;
-
-	public int xOffset, yOffset;
 
 	public Screen(int width, int height) {
 
@@ -21,10 +21,11 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int color, int xOffset, int yOffset) {
+	public void renderPlayer(int color, int x, int y, Player p) {
+
 		for (int xb = 0; xb < 8; xb++) {
 			for (int yb = 0; yb < 8; yb++) {
-				pixels[xOffset + xb + (yOffset + yb) * width] = color;
+				pixels[x + xb + (y + yb) * width] = color;
 			}
 		}
 	}
