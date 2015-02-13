@@ -28,6 +28,7 @@ public class Screen {
 		for (int i = (height - 1) * width; i < (height - 0) * width; i++) {
 			pixels[i] = 0xffffff;
 		}
+		
 		for (int i = 0; i < pixels.length; i += width) {
 			pixels[i] = 0xffffff;
 		}
