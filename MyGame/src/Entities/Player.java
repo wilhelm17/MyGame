@@ -12,6 +12,7 @@ public class Player {
 	double xOffset, yOffset;
 	double alpha = 0;
 	double beta = 0;
+	boolean moving = true;
 
 	public Player(int color, Keyboard key, Screen screen, int xspawn,
 			int yspawn, int width) {
@@ -28,5 +29,9 @@ public class Player {
 
 	public void render() {
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset);
+	}
+	
+	public void setMove(boolean b){
+		this.moving = b;
 	}
 }
