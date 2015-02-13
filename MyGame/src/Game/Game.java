@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 1;
 	public static int width = Toolkit.getDefaultToolkit().getScreenSize().width
 			/ scale;
-	public static int height = width / 16 * 9;
+	public static int height = (width / 16 * 9)-30;
 
 	private static Thread thread;
 	public static boolean running = false;
@@ -152,5 +152,6 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 		screen.clear();
+		screen.border();
 	}
 }
