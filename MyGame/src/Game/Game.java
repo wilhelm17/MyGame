@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 1;
 	public static int width = Toolkit.getDefaultToolkit().getScreenSize().width
 			/ scale;
-	public static int height = (width / 16 * 9)-30;
+	public static int height = (width / 16 * 9) - 30;
 
 	private static Thread thread;
 	public static boolean running = false;
@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
 		key = new Keyboard();
 		player1 = new Player1(0xE60EB0, key, screen, width / 2 - 4,
 				height / 2 - 4);
-//		player2 = new Player2(0x1FDB44, key, screen, 20, 20);
+		// player2 = new Player2(0x1FDB44, key, screen, 20, 20);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -103,7 +103,7 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		key.update();
 		player1.update();
-//		player2.update();
+		// player2.update();
 	}
 
 	public void render() {
@@ -118,8 +118,7 @@ public class Game extends Canvas implements Runnable {
 			screen.clear();
 		}
 		player1.render();
-//		player2.render();
-		screen.renderOldPixel();
+		// player2.render();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
