@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.ArrayList;
+
 import Entities.Player;
 
 public class Screen {
@@ -7,6 +9,7 @@ public class Screen {
 	public int width, height;
 	public int[] pixels;
 	int aIndex = 0;
+	ArrayList<Integer> error = new ArrayList<Integer>();
 
 	public Screen(int width, int height) {
 
@@ -19,6 +22,10 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
+	}
+	
+	public void renderPixel(int x, int y, int color){
+		pixels[x+y*width] = color;
 	}
 
 	public void border() {
@@ -50,12 +57,15 @@ public class Screen {
 						System.out.println("Colision: " + (x + xb) + " , "
 								+ (y + yb) + "; Color: "
 								+ pixels[x + xb + (y + yb) * width]);
+						p.b = false;
+						p.errorx = x + xb;
+						p.errory = y + yb;
 					}
 				}
 				pixels[x + xb + (y + yb) * width] = color;
 				p.a.set(aIndex, x + xb + (y + yb) * width);
 				aIndex++;
-				if (aIndex > 640) {
+				if (aIndex > 704) {
 					aIndex = 0;
 				}
 			}
