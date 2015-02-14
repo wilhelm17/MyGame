@@ -1,6 +1,5 @@
 package Game;
 
-
 import Entities.Player;
 
 public class Screen {
@@ -19,6 +18,16 @@ public class Screen {
 	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
+		}
+	}
+
+	public void test() {
+		for (int i = 0; i < pixels.length; i++) {
+			if (pixels[i] != 0x000000 && pixels[i] != 0xffffff
+					&& pixels[i] != 0xE60EB0) {
+				pixels[i] = 0xff0000;
+				System.out.println("Error found: "+i);
+			}
 		}
 	}
 
@@ -48,6 +57,9 @@ public class Screen {
 					} else if (pixels[x + xb + (y + yb) * width] == color
 							&& !p.a.contains(x + xb + (y + yb) * width)) {
 						p.moving = false;
+						System.out.println("Colision: " + (x + xb) + " , "
+								+ (y + yb) + "; Color: "
+								+ pixels[x + xb + (y + yb) * width]);
 					}
 				}
 				pixels[x + xb + (y + yb) * width] = color;
