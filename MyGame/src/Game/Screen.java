@@ -54,7 +54,7 @@ public class Screen {
 					} else if (pixels[x + xb + (y + yb) * width] == color
 							&& !p.a.contains(x + xb + (y + yb) * width)) {
 						p.moving = false;
-						System.out.println("Colision: " + (x + xb) + " , "
+						System.out.println("Collision: " + (x + xb) + " , "
 								+ (y + yb) + "; Color: "
 								+ pixels[x + xb + (y + yb) * width]);
 						p.b = false;
