@@ -21,16 +21,6 @@ public class Screen {
 		}
 	}
 
-	public void test() {
-		for (int i = 0; i < pixels.length; i++) {
-			if (pixels[i] != 0x000000 && pixels[i] != 0xffffff
-					&& pixels[i] != 0xE60EB0) {
-				pixels[i] = 0xff0000;
-				System.out.println("Error found: "+i);
-			}
-		}
-	}
-
 	public void border() {
 		for (int i = 0; i < width; i++) {
 			pixels[i] = 0xffffff;
