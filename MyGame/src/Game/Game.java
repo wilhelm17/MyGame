@@ -151,7 +151,6 @@ public class Game extends Canvas implements Runnable {
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frm.setLocationRelativeTo(null);
 		frm.setVisible(true);
-
 		game.start();
 		screen.clear();
 		screen.border();
