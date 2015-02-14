@@ -19,7 +19,7 @@ public class Player {
 		this.screen = screen;
 		this.xOffset += xspawn;
 		this.yOffset += yspawn;
-		for (int i = 0; i <= 960; i++) {
+		for (int i = 0; i <= 3200; i++) {
 			a.add(0);
 		}
 	}

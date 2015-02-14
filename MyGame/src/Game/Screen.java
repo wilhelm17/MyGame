@@ -65,7 +65,7 @@ public class Screen {
 				pixels[x + xb + (y + yb) * width] = color;
 				p.a.set(aIndex, x + xb + (y + yb) * width);
 				aIndex++;
-				if (aIndex > 960) {
+				if (aIndex > 3200) {
 					aIndex = 0;
 				}
 			}
