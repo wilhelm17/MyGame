@@ -119,6 +119,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		player1.render();
 //		player2.render();
+		screen.renderOldPixel();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
