@@ -17,8 +17,8 @@ public class Keyboard implements KeyListener {
 		right1 = keys[KeyEvent.VK_D];
 		left2 = keys[KeyEvent.VK_LEFT];
 		right2 = keys[KeyEvent.VK_RIGHT];
-		left3 = keys[KeyEvent.VK_Q];
-		right3 = keys[KeyEvent.VK_E];
+		left3 = keys[KeyEvent.VK_J];
+		right3 = keys[KeyEvent.VK_L];
 		fps = tkeys[KeyEvent.VK_F1];
 		esc = keys[KeyEvent.VK_ESCAPE];
 		clear = keys[KeyEvent.VK_F2];
