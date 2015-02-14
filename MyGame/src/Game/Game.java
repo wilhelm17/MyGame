@@ -15,8 +15,6 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import Entities.Player;
-import Entities.Player1;
-import Entities.Player2;
 import Input.Keyboard;
 
 public class Game extends Canvas implements Runnable {
@@ -31,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	private Keyboard key;
 	private static JFrame frm;
-	Player player1, player2;
+	Player player1, player2, player3;
 
 	Graphics g;
 	private static Screen screen;
@@ -48,9 +46,11 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		player1 = new Player1(0xE60EB0, key, screen, width / 2 - 4,
-				height / 2 - 4);
-		// player2 = new Player2(0x1FDB44, key, screen, 20, 20);
+		player1 = new Player(0xE60EB0, screen, width / 2 - 4,
+				height / 2 - 4 );
+		player2 = new Player(0x1FDB44, screen, 20, 20);
+		this.setFocusable(true);
+		player3 = new Player(0x424FFF, screen, 500, 500);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -102,8 +102,9 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		player1.update();
-		// player2.update();
+		player1.update(key.left1,key.right1);
+		player2.update(key.left2,key.right2);
+		player3.update(key.left3,key.right3);
 	}
 
 	public void render() {
@@ -118,14 +119,15 @@ public class Game extends Canvas implements Runnable {
 			screen.clear();
 		}
 		player1.render();
-		// player2.render();
+		player2.render();
+		player3.render();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
 
 		g = bs.getDrawGraphics();
 		g.fillRect(0, 0, width * scale, height * scale);
-		g.drawImage(img, 0, 0, width * scale, height * scale, null);
+		g.drawImage(img, 0, 0, width, height, null);
 
 		if (key.fps) {
 			g.setColor(Color.white);

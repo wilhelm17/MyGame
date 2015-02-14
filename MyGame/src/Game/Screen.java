@@ -29,26 +29,24 @@ public class Screen {
 		pixels[x + y * width] = color;
 	}
 
-	public void renderOldPixel() {
-		for (int i = 0; i < pixels.length; i++) {
-			if (pixels[i] == 0xE60EB0 && !p.a.contains(i) ) {
-				pixels[i] = 0xff0000;
-			}
-		}
-	}
-
 	public void border() {
-		for (int i = 0; i < width; i++) {
+		for (int i = 0; i < width * 2; i++) {
 			pixels[i] = 0xffffff;
 		}
-		for (int i = (height - 1) * width; i < (height - 0) * width; i++) {
+		for (int i = (height - 2) * width; i < (height - 0) * width; i++) {
 			pixels[i] = 0xffffff;
 		}
 
 		for (int i = 0; i < pixels.length; i += width) {
 			pixels[i] = 0xffffff;
 		}
+		for (int i = 1; i < pixels.length; i += width) {
+			pixels[i] = 0xffffff;
+		}
 		for (int i = width - 1; i < pixels.length; i += width) {
+			pixels[i] = 0xffffff;
+		}
+		for (int i = width - 2; i < pixels.length; i += width) {
 			pixels[i] = 0xffffff;
 		}
 	}
@@ -62,12 +60,6 @@ public class Screen {
 						p.moving = false;
 					} else if (!p.a.contains(x + xb + (y + yb) * width)) {
 						p.moving = false;
-						System.out.println("Collision: " + (x + xb) + " , "
-								+ (y + yb) + "; Color: "
-								+ pixels[x + xb + (y + yb) * width]);
-						p.b = false;
-						p.errorx = x + xb;
-						p.errory = y + yb;
 					}
 				}
 				pixels[x + xb + (y + yb) * width] = color;

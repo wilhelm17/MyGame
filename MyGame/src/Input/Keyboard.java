@@ -7,8 +7,9 @@ public class Keyboard implements KeyListener {
 
 	private boolean[] keys = new boolean[65536];
 	private boolean[] tkeys = new boolean[65536];
-	public boolean up1, down1, left1, right1;
-	public boolean up2, down2, left2, right2;
+	public boolean left1, right1;
+	public boolean left2, right2;
+	public boolean left3, right3;
 	public boolean fps, esc, clear;
 
 	public void update() {
@@ -16,6 +17,8 @@ public class Keyboard implements KeyListener {
 		right1 = keys[KeyEvent.VK_D];
 		left2 = keys[KeyEvent.VK_LEFT];
 		right2 = keys[KeyEvent.VK_RIGHT];
+		left3 = keys[KeyEvent.VK_Q];
+		right3 = keys[KeyEvent.VK_E];
 		fps = tkeys[KeyEvent.VK_F1];
 		esc = keys[KeyEvent.VK_ESCAPE];
 		clear = keys[KeyEvent.VK_F2];

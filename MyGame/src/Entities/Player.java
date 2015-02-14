@@ -3,11 +3,9 @@ package Entities;
 import java.util.ArrayList;
 
 import Game.Screen;
-import Input.Keyboard;
 
 public class Player {
 
-	Keyboard key;
 	Screen screen;
 	int color, xspawn, yspawn;
 	double xOffset, yOffset;
@@ -15,11 +13,8 @@ public class Player {
 	double beta = 0;
 	public boolean moving = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
-	public boolean b = true;
-	public int errorx = 0, errory = 0;
 
-	public Player(int color, Keyboard key, Screen screen, int xspawn, int yspawn) {
-		this.key = key;
+	public Player(int color, Screen screen, int xspawn, int yspawn) {
 		this.color = color;
 		this.screen = screen;
 		this.xOffset += xspawn;
@@ -29,18 +24,24 @@ public class Player {
 		}
 	}
 
-	public void update() {
-	}
-
-	public void render() {
-		if (b) {
-			screen.renderPlayer(color, (int) xOffset, (int) yOffset, this);
-		} else {
-			screen.renderPixel(errorx, errory, 0x00ff00);
+	public void update(boolean left,boolean right) {
+		if (moving) {
+			if (left && right) {
+			} else {
+				if (left) {
+					alpha -= 2.5;
+				}
+				if (right) {
+					alpha += 2.5;
+				}
+			}
+			beta = Math.toRadians(alpha);
+			yOffset += 2 * Math.sin(beta);
+			xOffset += 2 * Math.cos(beta);
 		}
 	}
 
-	public void setMove(boolean b) {
-		this.moving = b;
+	public void render() {
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this);
 	}
 }
