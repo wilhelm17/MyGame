@@ -50,8 +50,6 @@ public class Game extends Canvas implements Runnable {
 				height / 2 - 4 );
 		player2 = new Player(0x1FDB44, screen, 20, 20);
 		this.setFocusable(true);
-		player3 = new Player(0x424FFF, screen, 500, 500);
-		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
 	}
@@ -104,7 +102,6 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		player1.update(key.left1,key.right1);
 		player2.update(key.left2,key.right2);
-		player3.update(key.left3,key.right3);
 	}
 
 	public void render() {
@@ -120,7 +117,6 @@ public class Game extends Canvas implements Runnable {
 		}
 		player1.render();
 		player2.render();
-		player3.render();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
@@ -145,7 +141,7 @@ public class Game extends Canvas implements Runnable {
 		frm = new JFrame();
 		GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getScreenDevices()[0];
-		ge.setFullScreenWindow(frm);
+//		ge.setFullScreenWindow(frm);
 		frm.add(game);
 		frm.pack();
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
