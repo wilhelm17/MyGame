@@ -29,6 +29,45 @@ public class Screen {
 		pixels[x + y * width] = color;
 	}
 
+	public boolean isFreePosition(int x, int y) {
+		for (int xb = 2; xb <= 5; xb++) {
+			for (int yb = 0; yb <= 1; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+					return false;
+				}
+			}
+		}
+		for (int xb = 1; xb <= 6; xb++) {
+			for (int yb = 1; yb <= 2; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+					return false;
+				}
+			}
+		}
+		for (int xb = 0; xb <= 7; xb++) {
+			for (int yb = 2; yb <= 5; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+					return false;
+				}
+			}
+		}
+		for (int xb = 1; xb <= 6; xb++) {
+			for (int yb = 5; yb <= 6; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+					return false;
+				}
+			}
+		}
+		for (int xb = 2; xb <= 5; xb++) {
+			for (int yb = 6; yb <= 7; yb++) {
+				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public void border() {
 		for (int i = 0; i < width * 2; i++) {
 			pixels[i] = 0xffffff;
@@ -68,7 +107,7 @@ public class Screen {
 					p.a.set(aIndex, x + xb + (y + yb) * width);
 					aIndex++;
 				}
-				if (aIndex > 500) {
+				if (aIndex > 1000) {
 					aIndex = 0;
 				}
 			}

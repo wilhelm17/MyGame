@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private static JFrame frm;
 	Player player1, player2, player3;
+	int p1xs = 0, p1ys = 0, p2xs = 0, p2ys = 0;
 
 	Graphics g;
 	private static Screen screen;
@@ -46,9 +47,26 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		player1 = new Player(0xE60EB0, screen, width / 2 - 4,
-				height / 2 - 4 );
-		player2 = new Player(0x1FDB44, screen, 20, 20);
+		while (p1xs == 0 && p1ys == 0) {
+			p1xs = (int) (Math.random()* width);
+			p1ys = (int) (Math.random()* height);
+			if(!screen.isFreePosition(p1xs,p1ys)){
+				p1xs = 0;
+				p1ys = 0;
+			}
+		}
+		while (p2xs == 0 && p2ys == 0) {
+			p2xs = (int) (Math.random()* width);
+			p2ys = (int) (Math.random()* height);
+			if(!screen.isFreePosition(p1xs,p1ys)){
+				p2xs = 0;
+				p2ys = 0;
+			}
+		}
+		player1 = new Player(0xE60EB0, screen);
+		player1.setSpawn(p1xs, p1ys);
+		player2 = new Player(0x1FDB44, screen);
+		player2.setSpawn(p2xs, p2ys);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -100,8 +118,8 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		player1.update(key.left1,key.right1);
-		player2.update(key.left2,key.right2);
+		player1.update(key.left1, key.right1);
+		player2.update(key.left2, key.right2);
 	}
 
 	public void render() {
@@ -141,7 +159,7 @@ public class Game extends Canvas implements Runnable {
 		frm = new JFrame();
 		GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
 				.getScreenDevices()[0];
-//		ge.setFullScreenWindow(frm);
+		ge.setFullScreenWindow(frm);
 		frm.add(game);
 		frm.pack();
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

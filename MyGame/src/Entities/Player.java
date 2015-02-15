@@ -7,21 +7,24 @@ import Game.Screen;
 public class Player {
 
 	Screen screen;
-	int color, xspawn, yspawn;
+	int color;
 	double xOffset, yOffset;
 	double alpha = 0;
 	double beta = 0;
 	public boolean moving = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
 
-	public Player(int color, Screen screen, int xspawn, int yspawn) {
+	public Player(int color, Screen screen) {
 		this.color = color;
 		this.screen = screen;
-		this.xOffset += xspawn;
-		this.yOffset += yspawn;
-		for (int i = 0; i <= 500; i++) {
+		for (int i = 0; i <= 1000; i++) {
 			a.add(0);
 		}
+	}
+
+	public void setSpawn(int x, int y) {
+		xOffset = -xOffset + x;
+		yOffset = -yOffset + y;
 	}
 
 	public void update(boolean left, boolean right) {
