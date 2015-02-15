@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -23,7 +21,7 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 1;
 	public static int width = Toolkit.getDefaultToolkit().getScreenSize().width
 			/ scale;
-	public static int height = (width / 16 * 9) - 30;
+	public static int height = (width / 16 * 9);
 
 	private static Thread thread;
 	public static boolean running = false;
@@ -161,10 +159,8 @@ public class Game extends Canvas implements Runnable {
 
 		Game game = new Game();
 		frm = new JFrame();
-		GraphicsDevice ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
-				.getScreenDevices()[0];
-		ge.setFullScreenWindow(frm);
 		frm.add(game);
+		frm.setUndecorated(true);
 		frm.pack();
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frm.setLocationRelativeTo(null);
