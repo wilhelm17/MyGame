@@ -19,12 +19,12 @@ public class Player {
 		this.screen = screen;
 		this.xOffset += xspawn;
 		this.yOffset += yspawn;
-		for (int i = 0; i <= 3200; i++) {
+		for (int i = 0; i <= 500; i++) {
 			a.add(0);
 		}
 	}
 
-	public void update(boolean left,boolean right) {
+	public void update(boolean left, boolean right) {
 		if (moving) {
 			if (left && right) {
 			} else {
@@ -42,6 +42,15 @@ public class Player {
 	}
 
 	public void render() {
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 0,
+				1);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 1, 6, 1,
+				2);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 0, 7, 2,
+				5);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 1, 6, 5,
+				6);
+		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 6,
+				7);
 	}
 }

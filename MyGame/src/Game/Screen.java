@@ -51,10 +51,11 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int color, int x, int y, Player p) {
+	public void renderPlayer(int color, int x, int y, Player p, int xs, int xe,
+			int ys, int ye) {
 		this.p = p;
-		for (int xb = 0; xb < 8; xb++) {
-			for (int yb = 0; yb < 8; yb++) {
+		for (int xb = xs; xb <= xe; xb++) {
+			for (int yb = ys; yb <= ye; yb++) {
 				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
 					if (pixels[x + xb + (y + yb) * width] != color) {
 						p.moving = false;
@@ -63,9 +64,11 @@ public class Screen {
 					}
 				}
 				pixels[x + xb + (y + yb) * width] = color;
-				p.a.set(aIndex, x + xb + (y + yb) * width);
-				aIndex++;
-				if (aIndex > 3200) {
+				if (!p.a.contains(x + xb + (y + yb) * width)) {
+					p.a.set(aIndex, x + xb + (y + yb) * width);
+					aIndex++;
+				}
+				if (aIndex > 500) {
 					aIndex = 0;
 				}
 			}
