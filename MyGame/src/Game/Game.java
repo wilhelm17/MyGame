@@ -167,6 +167,5 @@ public class Game extends Canvas implements Runnable {
 		frm.setVisible(true);
 		game.start();
 		screen.clear();
-		screen.border();
 	}
 }

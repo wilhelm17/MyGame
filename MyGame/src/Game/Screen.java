@@ -23,6 +23,7 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
+		border();
 	}
 
 	public void renderPixel(int x, int y, int color) {
@@ -30,6 +31,12 @@ public class Screen {
 	}
 
 	public boolean isFreePosition(int x, int y) {
+		if(x + 8 + (y + 8) * width > pixels.length){
+			return false;
+		}
+		if (x > width - 200) {
+			return false;
+		}
 		for (int xb = 2; xb <= 5; xb++) {
 			for (int yb = 0; yb <= 1; yb++) {
 				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
