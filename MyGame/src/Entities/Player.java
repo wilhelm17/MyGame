@@ -22,9 +22,10 @@ public class Player {
 		}
 	}
 
-	public void setSpawn(int x, int y) {
+	public void setSpawn(int x, int y, int alpha) {
 		xOffset = -xOffset + x;
 		yOffset = -yOffset + y;
+		this.alpha = alpha;
 	}
 
 	public void update(boolean left, boolean right) {

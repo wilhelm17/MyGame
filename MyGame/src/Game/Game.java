@@ -28,8 +28,8 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private static JFrame frm;
 	Player player1, player2, player3;
-	int[] spawn = new int[2];
-	int p1xs = 0, p2xs = 0, p1ys = 0, p2ys = 0;
+	int[] spawn = new int[3];
+	int p1xs = 0, p2xs = 0, p1ys = 0, p2ys = 0, alpha;
 
 	Graphics g;
 	private static Screen screen;
@@ -50,12 +50,14 @@ public class Game extends Canvas implements Runnable {
 		spawn = createRandomSpawn();
 		p1xs = spawn[0];
 		p1ys = spawn[1];
-		player1.setSpawn(p1xs, p1ys);
+		alpha = spawn[2];
+		player1.setSpawn(p1xs, p1ys, alpha);
 		player2 = new Player(0x1FDB44, screen);
 		spawn = createRandomSpawn();
 		p2xs = spawn[0];
 		p2ys = spawn[1];
-		player2.setSpawn(p2xs, p2ys);
+		alpha = spawn[2];
+		player2.setSpawn(p2xs, p2ys, alpha);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -113,15 +115,16 @@ public class Game extends Canvas implements Runnable {
 
 	public int[] createRandomSpawn() {
 		int x = 0, y = 0;
+		int alpha = (int) (Math.random() * 360);
 		while (x == 0 && y == 0) {
-			x = (int) (Math.random() * width);
-			y = (int) (Math.random() * height);
+			x = (int) (Math.random() * (width - 400) + 200);
+			y = (int) (Math.random() * (height - 400) + 200);
 			if (!screen.isFreePosition(x, y)) {
 				x = 0;
 				y = 0;
 			}
 		}
-		return new int[] { x, y };
+		return new int[] { x, y, alpha };
 	}
 
 	public void render() {

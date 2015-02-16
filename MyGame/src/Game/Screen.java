@@ -34,9 +34,6 @@ public class Screen {
 		if(x + 8 + (y + 8) * width > pixels.length){
 			return false;
 		}
-		if (x > width - 200) {
-			return false;
-		}
 		for (int xb = 2; xb <= 5; xb++) {
 			for (int yb = 0; yb <= 1; yb++) {
 				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
