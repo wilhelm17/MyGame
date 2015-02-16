@@ -111,19 +111,7 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		player1.update(key.left1, key.right1);
 		player2.update(key.left2, key.right2);
-		if (!player1.getMoving() || !player2.getMoving()) {
-			timer++;
-			if (timer > 180) {
-				screen.clear();
-				spawn = createRandomSpawn();
-				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
-				spawn = createRandomSpawn();
-				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
-				player1.moving = true;
-				player2.moving = true;
-				timer = 0;
-			}
-		}
+		respawn();
 	}
 
 	public int[] createRandomSpawn() {
@@ -183,6 +171,22 @@ public class Game extends Canvas implements Runnable {
 		}
 		g.dispose();
 		bs.show();
+	}
+
+	public void respawn() {
+		if (!player1.getMoving() || !player2.getMoving()) {
+			timer++;
+			if (timer > 180) {
+				screen.clear();
+				spawn = createRandomSpawn();
+				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
+				spawn = createRandomSpawn();
+				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
+				player1.moving = true;
+				player2.moving = true;
+				timer = 0;
+			}
+		}
 	}
 
 	public static void main(String[] args) {
