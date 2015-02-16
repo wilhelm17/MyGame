@@ -148,7 +148,28 @@ public class Game extends Canvas implements Runnable {
 		g = bs.getDrawGraphics();
 		g.fillRect(0, 0, width * scale, height * scale);
 		g.drawImage(img, 0, 0, width, height, null);
+		overlay();
+		g.dispose();
+		bs.show();
+	}
 
+	public void respawn() {
+		if (!player1.getMoving() || !player2.getMoving()) {
+			timer++;
+			if (timer > 180) {
+				screen.clear();
+				spawn = createRandomSpawn();
+				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
+				spawn = createRandomSpawn();
+				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
+				player1.moving = true;
+				player2.moving = true;
+				timer = 0;
+			}
+		}
+	}
+
+	public void overlay() {
 		if (key.fps) {
 			g.setColor(Color.white);
 			g.setFont(new Font("Arial", 0, 20));
@@ -168,24 +189,6 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(Color.white);
 			g.setFont(new Font("Arial", 0, 100));
 			g.drawString("3", width / 2, height / 2);
-		}
-		g.dispose();
-		bs.show();
-	}
-
-	public void respawn() {
-		if (!player1.getMoving() || !player2.getMoving()) {
-			timer++;
-			if (timer > 180) {
-				screen.clear();
-				spawn = createRandomSpawn();
-				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
-				spawn = createRandomSpawn();
-				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
-				player1.moving = true;
-				player2.moving = true;
-				timer = 0;
-			}
 		}
 	}
 
