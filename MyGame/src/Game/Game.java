@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
 	private static JFrame frm;
 	Player player1, player2, player3;
 	int[] spawn = new int[3];
+	int timer = 0;
 
 	Graphics g;
 	private static Screen screen;
@@ -74,18 +75,22 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
+	int ups;
+
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		int frames = 0;
+		int updates = 0;
 		while (running == true) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1) {
 				update();
+				updates++;
 				delta--;
 			}
 			render();
@@ -94,7 +99,9 @@ public class Game extends Canvas implements Runnable {
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				fps = frames;
+				ups = updates;
 				frames = 0;
+				updates = 0;
 			}
 		}
 		stop();
@@ -104,6 +111,19 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		player1.update(key.left1, key.right1);
 		player2.update(key.left2, key.right2);
+		if (!player1.getMoving() || !player2.getMoving()) {
+			timer++;
+			if (timer > 180) {
+				screen.clear();
+				spawn = createRandomSpawn();
+				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
+				spawn = createRandomSpawn();
+				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
+				player1.moving = true;
+				player2.moving = true;
+				timer = 0;
+			}
+		}
 	}
 
 	public int[] createRandomSpawn() {
@@ -144,9 +164,23 @@ public class Game extends Canvas implements Runnable {
 		if (key.fps) {
 			g.setColor(Color.white);
 			g.setFont(new Font("Arial", 0, 20));
-			g.drawString(fps + " fps", 20, 20);
+			g.drawString(fps + " fps, " + ups + " ups", 20, 20);
 		}
-
+		if (timer > 120) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 100));
+			g.drawString("1", width / 2, height / 2);
+		}
+		if (timer > 60 && timer < 120) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 100));
+			g.drawString("2", width / 2, height / 2);
+		}
+		if (timer < 60 && timer > 0) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 100));
+			g.drawString("3", width / 2, height / 2);
+		}
 		g.dispose();
 		bs.show();
 	}

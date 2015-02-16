@@ -23,8 +23,8 @@ public class Player {
 	}
 
 	public void setSpawn(int x, int y, int alpha) {
-		xOffset = -xOffset + x;
-		yOffset = -yOffset + y;
+		xOffset = x;
+		yOffset = y;
 		this.alpha = alpha;
 	}
 
@@ -56,5 +56,9 @@ public class Player {
 				6);
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 6,
 				7);
+	}
+
+	public boolean getMoving() {
+		return moving;
 	}
 }
