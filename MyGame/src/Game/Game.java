@@ -29,7 +29,6 @@ public class Game extends Canvas implements Runnable {
 	private static JFrame frm;
 	Player player1, player2, player3;
 	int[] spawn = new int[3];
-	int p1xs = 0, p2xs = 0, p1ys = 0, p2ys = 0, alpha;
 
 	Graphics g;
 	private static Screen screen;
@@ -48,16 +47,10 @@ public class Game extends Canvas implements Runnable {
 		key = new Keyboard();
 		player1 = new Player(0xE60EB0, screen);
 		spawn = createRandomSpawn();
-		p1xs = spawn[0];
-		p1ys = spawn[1];
-		alpha = spawn[2];
-		player1.setSpawn(p1xs, p1ys, alpha);
+		player1.setSpawn(spawn[0], spawn[1], spawn[2]);
 		player2 = new Player(0x1FDB44, screen);
 		spawn = createRandomSpawn();
-		p2xs = spawn[0];
-		p2ys = spawn[1];
-		alpha = spawn[2];
-		player2.setSpawn(p2xs, p2ys, alpha);
+		player2.setSpawn(spawn[0], spawn[1], spawn[2]);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
