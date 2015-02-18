@@ -21,13 +21,14 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 1;
 	public static int width = Toolkit.getDefaultToolkit().getScreenSize().width
 			/ scale;
-	public static int height = (width / 16 * 9);
+	public static int height = Toolkit.getDefaultToolkit().getScreenSize().height
+			/ scale;
 
 	private static Thread thread;
 	public static boolean running = false;
 	private Keyboard key;
 	private static JFrame frm;
-	Player player1, player2, player3;
+	Player[] p = new Player[3];
 	int[] spawn = new int[3];
 	int timer = 0;
 
@@ -46,12 +47,12 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		player1 = new Player(0xE60EB0, screen);
+		p[0] = new Player(0xE60EB0, screen);
 		spawn = createRandomSpawn();
-		player1.setSpawn(spawn[0], spawn[1], spawn[2]);
-		player2 = new Player(0x1FDB44, screen);
+		p[0].setSpawn(spawn[0], spawn[1], spawn[2]);
+		p[1] = new Player(0x1FDB44, screen);
 		spawn = createRandomSpawn();
-		player2.setSpawn(spawn[0], spawn[1], spawn[2]);
+		p[1].setSpawn(spawn[0], spawn[1], spawn[2]);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -109,8 +110,8 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		player1.update(key.left1, key.right1);
-		player2.update(key.left2, key.right2);
+		p[0].update(key.left1, key.right1);
+		p[1].update(key.left2, key.right2);
 		respawn();
 	}
 
@@ -139,8 +140,8 @@ public class Game extends Canvas implements Runnable {
 		if (key.clear) {
 			screen.clear();
 		}
-		player1.render();
-		player2.render();
+		p[0].render();
+		p[1].render();
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
@@ -154,16 +155,16 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void respawn() {
-		if (!player1.getMoving() || !player2.getMoving()) {
+		if (!p[0].moving || !p[1].moving) {
 			timer++;
 			if (timer > 180) {
 				screen.clear();
 				spawn = createRandomSpawn();
-				player1.setSpawn(spawn[0], spawn[1], spawn[2]);
+				p[0].setSpawn(spawn[0], spawn[1], spawn[2]);
 				spawn = createRandomSpawn();
-				player2.setSpawn(spawn[0], spawn[1], spawn[2]);
-				player1.moving = true;
-				player2.moving = true;
+				p[1].setSpawn(spawn[0], spawn[1], spawn[2]);
+				p[0].moving = true;
+				p[1].moving = true;
 				timer = 0;
 			}
 		}

@@ -57,8 +57,4 @@ public class Player {
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 6,
 				7);
 	}
-
-	public boolean getMoving() {
-		return moving;
-	}
 }
