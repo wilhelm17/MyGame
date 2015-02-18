@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private static JFrame frm;
 	int playercount = 4;
-	boolean[] b = new boolean[playercount];
+	boolean[] crash = new boolean[playercount];
 	int crashcounter = 0;
 	Player[] p = new Player[playercount];
 	int[] spawn = new int[3];
@@ -166,9 +166,9 @@ public class Game extends Canvas implements Runnable {
 
 	public void respawn() {
 		for (int i = 0; i < playercount; i++) {
-			if (!p[i].moving && !b[i]) {
+			if (!p[i].moving && !crash[i]) {
 				crashcounter++;
-				b[i] = true;
+				crash[i] = true;
 			}
 		}
 		if (playercount - crashcounter <= 1) {
@@ -179,7 +179,7 @@ public class Game extends Canvas implements Runnable {
 					spawn = createRandomSpawn();
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
-					b[i] = false;
+					crash[i] = false;
 				}
 				timer = 0;
 				crashcounter = 0;
