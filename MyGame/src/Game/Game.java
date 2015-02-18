@@ -28,7 +28,10 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	private Keyboard key;
 	private static JFrame frm;
-	Player[] p = new Player[3];
+	int playercount = 4;
+	boolean[] b = new boolean[playercount];
+	int crashcounter = 0;
+	Player[] p = new Player[playercount];
 	int[] spawn = new int[3];
 	int timer = 0;
 
@@ -47,12 +50,11 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		p[0] = new Player(0xE60EB0, screen);
-		spawn = createRandomSpawn();
-		p[0].setSpawn(spawn[0], spawn[1], spawn[2]);
-		p[1] = new Player(0x1FDB44, screen);
-		spawn = createRandomSpawn();
-		p[1].setSpawn(spawn[0], spawn[1], spawn[2]);
+		for (int i = 0; i < playercount; i++) {
+			p[i] = new Player(createRandomColor(), screen);
+			spawn = createRandomSpawn();
+			p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
+		}
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -112,6 +114,8 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		p[0].update(key.left1, key.right1);
 		p[1].update(key.left2, key.right2);
+		p[2].update(key.left3, key.right3);
+		p[3].update(key.left4, key.right4);
 		respawn();
 	}
 
@@ -129,6 +133,11 @@ public class Game extends Canvas implements Runnable {
 		return new int[] { x, y, alpha };
 	}
 
+	public int createRandomColor() {
+		int color = (int) (Math.random() * 0xFFFFFF);
+		return color;
+	}
+
 	public void render() {
 
 		BufferStrategy bs = getBufferStrategy();
@@ -140,8 +149,9 @@ public class Game extends Canvas implements Runnable {
 		if (key.clear) {
 			screen.clear();
 		}
-		p[0].render();
-		p[1].render();
+		for (int i = 0; i < playercount; i++) {
+			p[i].render();
+		}
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
@@ -155,17 +165,24 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void respawn() {
-		if (!p[0].moving || !p[1].moving) {
+		for (int i = 0; i < playercount; i++) {
+			if (!p[i].moving && !b[i]) {
+				crashcounter++;
+				b[i] = true;
+			}
+		}
+		if (playercount - crashcounter <= 1) {
 			timer++;
 			if (timer > 180) {
 				screen.clear();
-				spawn = createRandomSpawn();
-				p[0].setSpawn(spawn[0], spawn[1], spawn[2]);
-				spawn = createRandomSpawn();
-				p[1].setSpawn(spawn[0], spawn[1], spawn[2]);
-				p[0].moving = true;
-				p[1].moving = true;
+				for (int i = 0; i < playercount; i++) {
+					spawn = createRandomSpawn();
+					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
+					p[i].moving = true;
+					b[i] = false;
+				}
 				timer = 0;
+				crashcounter = 0;
 			}
 		}
 	}

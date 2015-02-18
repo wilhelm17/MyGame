@@ -10,6 +10,7 @@ public class Keyboard implements KeyListener {
 	public boolean left1, right1;
 	public boolean left2, right2;
 	public boolean left3, right3;
+	public boolean left4, right4;
 	public boolean fps, esc, clear;
 
 	public void update() {
@@ -19,6 +20,8 @@ public class Keyboard implements KeyListener {
 		right2 = keys[KeyEvent.VK_RIGHT];
 		left3 = keys[KeyEvent.VK_J];
 		right3 = keys[KeyEvent.VK_L];
+		left4 = keys[KeyEvent.VK_F];
+		right4 = keys[KeyEvent.VK_H];
 		fps = tkeys[KeyEvent.VK_F1];
 		esc = keys[KeyEvent.VK_ESCAPE];
 		clear = keys[KeyEvent.VK_F2];
