@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	private Keyboard key;
 	private static JFrame frm;
-	int playercount = 4;
+	int playercount = 2;
 	boolean[] crash = new boolean[playercount];
 	int crashcounter = 0;
 	Player[] p = new Player[playercount];
@@ -114,8 +114,6 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		p[0].update(key.left1, key.right1);
 		p[1].update(key.left2, key.right2);
-		p[2].update(key.left3, key.right3);
-		p[3].update(key.left4, key.right4);
 		respawn();
 	}
 
