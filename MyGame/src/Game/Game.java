@@ -9,6 +9,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 
@@ -33,7 +35,8 @@ public class Game extends Canvas implements Runnable {
 	int crashcounter = 0;
 	Player[] p = new Player[playercount];
 	int[] spawn = new int[3];
-	int timer = 0;
+	Timer timer = new Timer();
+	String s = "";
 
 	Graphics g;
 	private static Screen screen;
@@ -114,7 +117,16 @@ public class Game extends Canvas implements Runnable {
 		key.update();
 		p[0].update(key.left1, key.right1);
 		p[1].update(key.left2, key.right2);
-		respawn();
+		for (int i = 0; i < playercount; i++) {
+			if (!p[i].moving && !crash[i]) {
+				crashcounter++;
+				crash[i] = true;
+			}
+		}
+		if (playercount - crashcounter == 1) {
+			crashcounter = playercount + 1;
+			respawn();
+		}
 	}
 
 	public int[] createRandomSpawn() {
@@ -163,26 +175,33 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void respawn() {
-		for (int i = 0; i < playercount; i++) {
-			if (!p[i].moving && !crash[i]) {
-				crashcounter++;
-				crash[i] = true;
-			}
-		}
-		if (playercount - crashcounter <= 1) {
-			timer++;
-			if (timer > 180) {
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
 				screen.clear();
 				for (int i = 0; i < playercount; i++) {
 					spawn = createRandomSpawn();
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
-					p[i].moving = true;
 					crash[i] = false;
+					p[i].moving = true;
 				}
-				timer = 0;
+				s = "";
 				crashcounter = 0;
 			}
-		}
+		}, 3 * 1000);
+		s = "3";
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				s = "2";
+			}
+		}, 1 * 1000);
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				s = "1";
+			}
+		}, 2 * 1000);
 	}
 
 	public void overlay() {
@@ -191,21 +210,10 @@ public class Game extends Canvas implements Runnable {
 			g.setFont(new Font("Arial", 0, 20));
 			g.drawString(fps + " fps, " + ups + " ups", 20, 20);
 		}
-		if (timer > 120) {
-			g.setColor(Color.white);
-			g.setFont(new Font("Arial", 0, 100));
-			g.drawString("1", width / 2, height / 2);
-		}
-		if (timer > 60 && timer < 120) {
-			g.setColor(Color.white);
-			g.setFont(new Font("Arial", 0, 100));
-			g.drawString("2", width / 2, height / 2);
-		}
-		if (timer < 60 && timer > 0) {
-			g.setColor(Color.white);
-			g.setFont(new Font("Arial", 0, 100));
-			g.drawString("3", width / 2, height / 2);
-		}
+		g.setColor(Color.white);
+		g.setFont(new Font("Arial", 0, 100));
+		g.drawString(s, width / 2, height / 2);
+
 	}
 
 	public static void main(String[] args) {
