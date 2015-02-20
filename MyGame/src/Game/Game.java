@@ -123,7 +123,7 @@ public class Game extends Canvas implements Runnable {
 				crash[i] = true;
 			}
 		}
-		if (playercount - crashcounter == 1) {
+		if (playercount - crashcounter == 1 || playercount - crashcounter == 0) {
 			crashcounter = playercount + 1;
 			respawn();
 		}
@@ -182,8 +182,8 @@ public class Game extends Canvas implements Runnable {
 				for (int i = 0; i < playercount; i++) {
 					spawn = createRandomSpawn();
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
-					crash[i] = false;
 					p[i].moving = true;
+					crash[i] = false;
 				}
 				s = "";
 				crashcounter = 0;
