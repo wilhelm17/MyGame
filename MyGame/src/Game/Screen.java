@@ -1,7 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
-
 import Entities.Player;
 
 public class Screen {
@@ -9,7 +7,6 @@ public class Screen {
 	public int width, height;
 	public int[] pixels;
 	int aIndex = 0;
-	ArrayList<Integer> error = new ArrayList<Integer>();
 	Player p;
 
 	public Screen(int width, int height) {

@@ -37,10 +37,10 @@ public class Game extends Canvas implements Runnable {
 	int[] spawn = new int[3];
 	Timer timer = new Timer();
 	String s = "";
-
 	Graphics g;
 	private static Screen screen;
 	int fps;
+	int respawncount = 0;
 
 	private BufferedImage img = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -115,17 +115,10 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		p[0].update(key.left1, key.right1);
-		p[1].update(key.left2, key.right2);
-		for (int i = 0; i < playercount; i++) {
-			if (!p[i].moving && !crash[i]) {
-				crashcounter++;
-				crash[i] = true;
-			}
-		}
-		if (playercount - crashcounter == 1 || playercount - crashcounter == 0) {
-			crashcounter = playercount + 1;
-			respawn();
+		if (!key.pause) {
+			p[0].update(key.left1, key.right1);
+			p[1].update(key.left2, key.right2);
+			crash();
 		}
 	}
 
@@ -214,6 +207,19 @@ public class Game extends Canvas implements Runnable {
 		g.setFont(new Font("Arial", 0, 100));
 		g.drawString(s, width / 2, height / 2);
 
+	}
+
+	public void crash() {
+		for (int i = 0; i < playercount; i++) {
+			if (!p[i].moving && !crash[i]) {
+				crashcounter++;
+				crash[i] = true;
+			}
+		}
+		if (playercount - crashcounter == 1 || playercount - crashcounter == 0) {
+			crashcounter = playercount + 1;
+			respawn();
+		}
 	}
 
 	public static void main(String[] args) {

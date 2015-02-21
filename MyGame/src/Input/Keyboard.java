@@ -11,7 +11,7 @@ public class Keyboard implements KeyListener {
 	public boolean left2, right2;
 	public boolean left3, right3;
 	public boolean left4, right4;
-	public boolean fps, esc, clear;
+	public boolean fps, esc, clear, pause;
 
 	public void update() {
 		left1 = keys[KeyEvent.VK_A];
@@ -25,6 +25,7 @@ public class Keyboard implements KeyListener {
 		fps = tkeys[KeyEvent.VK_F1];
 		esc = keys[KeyEvent.VK_ESCAPE];
 		clear = keys[KeyEvent.VK_F2];
+		pause = tkeys[KeyEvent.VK_F3];
 		if (esc) {
 			System.exit(0);
 		}
