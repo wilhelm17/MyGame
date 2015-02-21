@@ -177,6 +177,7 @@ public class Game extends Canvas implements Runnable {
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
 					crash[i] = false;
+					screen.clear();
 				}
 				s = "";
 				crashcounter = 0;

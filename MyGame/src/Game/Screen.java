@@ -28,7 +28,7 @@ public class Screen {
 	}
 
 	public boolean isFreePosition(int x, int y) {
-		if(x + 8 + (y + 8) * width > pixels.length){
+		if (x + 8 + (y + 8) * width > pixels.length) {
 			return false;
 		}
 		for (int xb = 2; xb <= 5; xb++) {
@@ -91,18 +91,22 @@ public class Screen {
 		}
 	}
 
+	public void Colision(int x, int y, int color) {
+		if (pixels[x + y * width] != 0x000000) {
+			if (pixels[x + y * width] != color) {
+				p.moving = false;
+			} else if (!p.a.contains(x + y * width)) {
+				p.moving = false;
+			}
+		}
+	}
+
 	public void renderPlayer(int color, int x, int y, Player p, int xs, int xe,
 			int ys, int ye) {
 		this.p = p;
 		for (int xb = xs; xb <= xe; xb++) {
 			for (int yb = ys; yb <= ye; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
-					if (pixels[x + xb + (y + yb) * width] != color) {
-						p.moving = false;
-					} else if (!p.a.contains(x + xb + (y + yb) * width)) {
-						p.moving = false;
-					}
-				}
+				Colision(x + xb, y + yb, color);
 				pixels[x + xb + (y + yb) * width] = color;
 				if (!p.a.contains(x + xb + (y + yb) * width)) {
 					p.a.set(aIndex, x + xb + (y + yb) * width);
