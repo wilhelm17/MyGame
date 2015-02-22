@@ -7,7 +7,6 @@ public class Screen {
 	public int width, height;
 	public int[] pixels;
 	int aIndex = 0;
-	boolean colision = true;
 	Player p;
 
 	public Screen(int width, int height) {
@@ -93,7 +92,7 @@ public class Screen {
 	}
 
 	public void Colision(int x, int y, int color) {
-		if (pixels[x + y * width] != 0x000000) {
+		if (pixels[x + y * width] != 0x000000 && color != 0x000000) {
 			if (pixels[x + y * width] != color) {
 				p.moving = false;
 			} else if (!p.a.contains(x + y * width)) {
@@ -102,12 +101,8 @@ public class Screen {
 		}
 	}
 
-	public void setColision(boolean b) {
-		colision = b;
-	}
-
 	public void renderPlayer(int color, int x, int y, Player p, int xs, int xe,
-			int ys, int ye) {
+			int ys, int ye, boolean colision) {
 		this.p = p;
 		for (int xb = xs; xb <= xe; xb++) {
 			for (int yb = ys; yb <= ye; yb++) {
