@@ -3,6 +3,7 @@ package Entities;
 import java.util.ArrayList;
 
 import Game.Screen;
+import Input.Keyboard;
 
 public class Player {
 
@@ -13,10 +14,14 @@ public class Player {
 	double beta = 0;
 	public boolean moving = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
+	public int[] lastPos = new int[2];
+	int timer = 0;
+	Keyboard key;
 
-	public Player(int color, Screen screen) {
+	public Player(int color, Screen screen, Keyboard key) {
 		this.color = color;
 		this.screen = screen;
+		this.key = key;
 		for (int i = 0; i <= 1000; i++) {
 			a.add(0);
 		}
@@ -29,6 +34,7 @@ public class Player {
 	}
 
 	public void update(boolean left, boolean right) {
+		timer++;
 		if (moving) {
 			if (left && right) {
 			} else {
@@ -46,6 +52,23 @@ public class Player {
 	}
 
 	public void render() {
+		if (timer > 150) {
+			screen.setColision(false);
+			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
+					0, 1);
+			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
+					1, 2);
+			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 0, 7,
+					2, 5);
+			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
+					5, 6);
+			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
+					6, 7);
+			if (timer > 165) {
+				timer = 0;
+			}
+		}
+		screen.setColision(true);
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 0,
 				1);
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 1, 6, 1,
@@ -56,5 +79,7 @@ public class Player {
 				6);
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 6,
 				7);
+		lastPos[0] = (int) xOffset;
+		lastPos[1] = (int) yOffset;
 	}
 }

@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new Keyboard();
 		for (int i = 0; i < playercount; i++) {
-			p[i] = new Player(createRandomColor(), screen);
+			p[i] = new Player(createRandomColor(), screen, key);
 			spawn = createRandomSpawn();
 			p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
 		}
