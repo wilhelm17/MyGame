@@ -204,10 +204,15 @@ public class Game extends Canvas implements Runnable {
 			g.setFont(new Font("Arial", 0, 20));
 			g.drawString(fps + " fps, " + ups + " ups", 20, 20);
 		}
-		g.setColor(Color.white);
-		g.setFont(new Font("Arial", 0, 100));
-		g.drawString(s, width / 2, height / 2);
-
+		if (key.pause) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 100));
+			g.drawString("Pause", (width - 200) / 2, height / 2);
+		} else {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 100));
+			g.drawString(s, width / 2, height / 2);
+		}
 	}
 
 	public void crash() {
