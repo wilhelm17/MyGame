@@ -15,7 +15,7 @@ public class Player {
 	public boolean moving = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
 	public int[] lastPos = new int[2];
-	int timer = 0;
+	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
 	boolean colision = true;
 	Keyboard key;
 
@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public void render() {
-		if (timer > 150) {
+		if (timer > gap) {
 			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
 					0, 1, colision);
 			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
@@ -68,8 +68,9 @@ public class Player {
 					5, 6, colision);
 			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
 					6, 7, colision);
-			if (timer > 165) {
+			if (timer > gap + 15) {
 				timer = 0;
+				gap = (int) (Math.random() * (250 - 150) + 150);
 			}
 		}
 		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 0,
