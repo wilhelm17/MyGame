@@ -57,7 +57,7 @@ public class Player {
 	}
 
 	public void render() {
-		if (timer > gap) {
+		if (timer > gap || !colision) {
 			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
 					0, 1, colision);
 			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
