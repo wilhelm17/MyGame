@@ -9,7 +9,7 @@ public class Player {
 
 	Screen screen;
 	int color;
-	double xOffset, yOffset;
+	double x, y;
 	double alpha = 0;
 	double beta = 0;
 	public boolean moving = true;
@@ -29,8 +29,8 @@ public class Player {
 	}
 
 	public void setSpawn(int x, int y, int alpha) {
-		xOffset = x;
-		yOffset = y;
+		this.x = x;
+		this.y = y;
 		this.alpha = alpha;
 	}
 
@@ -47,8 +47,8 @@ public class Player {
 				}
 			}
 			beta = Math.toRadians(alpha);
-			yOffset += 2 * Math.sin(beta);
-			xOffset += 2 * Math.cos(beta);
+			y += 2 * Math.sin(beta);
+			x += 2 * Math.cos(beta);
 		}
 	}
 
@@ -73,17 +73,25 @@ public class Player {
 				gap = (int) (Math.random() * (250 - 150) + 150);
 			}
 		}
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 0,
-				1, colision);
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 1, 6, 1,
-				2, colision);
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 0, 7, 2,
-				5, colision);
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 1, 6, 5,
-				6, colision);
-		screen.renderPlayer(color, (int) xOffset, (int) yOffset, this, 2, 5, 6,
-				7, colision);
-		lastPos[0] = (int) xOffset;
-		lastPos[1] = (int) yOffset;
+		if (y >= 0 && y + 8 < screen.getHeight() - 1) {
+			screen.renderPlayer(color, (int) x, (int) y, this, 2, 5, 0, 1,
+					colision);
+			screen.renderPlayer(color, (int) x, (int) y, this, 1, 6, 1, 2,
+					colision);
+			screen.renderPlayer(color, (int) x, (int) y, this, 0, 7, 2, 5,
+					colision);
+			screen.renderPlayer(color, (int) x, (int) y, this, 1, 6, 5, 6,
+					colision);
+			screen.renderPlayer(color, (int) x, (int) y, this, 2, 5, 6, 7,
+					colision);
+			lastPos[0] = (int) x;
+			lastPos[1] = (int) y;
+		} else {
+			if (y > screen.getHeight() / 2) {
+				y = 0;
+			} else {
+				y = screen.getHeight() - 18;
+			}
+		}
 	}
 }

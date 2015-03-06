@@ -16,11 +16,19 @@ public class Screen {
 		pixels = new int[width * height];
 	}
 
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 	public void clear() {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
-		border();
+		// border();
 	}
 
 	public void renderPixel(int x, int y, int color) {
