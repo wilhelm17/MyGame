@@ -1,7 +1,6 @@
 package Game;
 
 import Entities.Player;
-import Sprites.PlayerSprite;
 import Sprites.Sprite;
 
 public class Screen {
