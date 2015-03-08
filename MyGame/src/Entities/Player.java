@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Game.Screen;
 import Input.Keyboard;
 import Sprites.PlayerSprite;
+import Sprites.Sprite;
 
 public class Player {
 
@@ -19,7 +20,7 @@ public class Player {
 	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
 	boolean colision = true;
 	Keyboard key;
-	PlayerSprite playerS = new PlayerSprite();
+	Sprite playerS = new PlayerSprite();
 
 	public Player(int color, Screen screen, Keyboard key) {
 		this.color = color;
@@ -61,16 +62,16 @@ public class Player {
 
 	public void render() {
 		if (timer > gap || !colision) {
-			screen.renderImg(0x000000, lastPosX, lastPosY, this, playerS, 8, 8,
-					colision);
+			screen.renderImg(0x000000, lastPosX, lastPosY, this, playerS,
+					playerS.w, playerS.h, colision);
 			if (timer > gap + 15) {
 				timer = 0;
 				gap = (int) (Math.random() * (250 - 150) + 150);
 			}
 		}
 		if (y >= 0 && y + 8 < screen.getHeight() - 1) {
-			screen.renderImg(color, (int) x, (int) y, this, playerS, 8, 8,
-					colision);
+			screen.renderImg(color, (int) x, (int) y, this, playerS, playerS.w,
+					playerS.h, colision);
 			lastPosX = (int) x;
 			lastPosY = (int) y;
 		} else {

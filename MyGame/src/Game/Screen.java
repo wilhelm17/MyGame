@@ -2,6 +2,7 @@ package Game;
 
 import Entities.Player;
 import Sprites.PlayerSprite;
+import Sprites.Sprite;
 
 public class Screen {
 
@@ -110,8 +111,8 @@ public class Screen {
 		}
 	}
 
-	public void renderImg(int color, int x, int y, Player p, PlayerSprite s,
-			int w, int h, boolean colision) {
+	public void renderImg(int color, int x, int y, Player p, Sprite s, int w,
+			int h, boolean colision) {
 		this.p = p;
 		for (int xb = 0; xb < w; xb++) {
 			for (int yb = 0; yb < h; yb++) {
