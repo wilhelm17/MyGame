@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Game.Screen;
 import Input.Keyboard;
+import Sprites.PlayerSprite;
 
 public class Player {
 
@@ -14,10 +15,11 @@ public class Player {
 	double beta = 0;
 	public boolean moving = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
-	public int[] lastPos = new int[2];
+	public int lastPosX, lastPosY;
 	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
 	boolean colision = true;
 	Keyboard key;
+	PlayerSprite playerS = new PlayerSprite();
 
 	public Player(int color, Screen screen, Keyboard key) {
 		this.color = color;
@@ -26,6 +28,7 @@ public class Player {
 		for (int i = 0; i <= 1000; i++) {
 			a.add(0);
 		}
+		playerS.load();
 	}
 
 	public void setSpawn(int x, int y, int alpha) {
@@ -58,34 +61,18 @@ public class Player {
 
 	public void render() {
 		if (timer > gap || !colision) {
-			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
-					0, 1, colision);
-			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
-					1, 2, colision);
-			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 0, 7,
-					2, 5, colision);
-			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 1, 6,
-					5, 6, colision);
-			screen.renderPlayer(0x000000, lastPos[0], lastPos[1], this, 2, 5,
-					6, 7, colision);
+			screen.renderImg(0x000000, lastPosX, lastPosY, this, playerS, 8, 8,
+					colision);
 			if (timer > gap + 15) {
 				timer = 0;
 				gap = (int) (Math.random() * (250 - 150) + 150);
 			}
 		}
 		if (y >= 0 && y + 8 < screen.getHeight() - 1) {
-			screen.renderPlayer(color, (int) x, (int) y, this, 2, 5, 0, 1,
+			screen.renderImg(color, (int) x, (int) y, this, playerS, 8, 8,
 					colision);
-			screen.renderPlayer(color, (int) x, (int) y, this, 1, 6, 1, 2,
-					colision);
-			screen.renderPlayer(color, (int) x, (int) y, this, 0, 7, 2, 5,
-					colision);
-			screen.renderPlayer(color, (int) x, (int) y, this, 1, 6, 5, 6,
-					colision);
-			screen.renderPlayer(color, (int) x, (int) y, this, 2, 5, 6, 7,
-					colision);
-			lastPos[0] = (int) x;
-			lastPos[1] = (int) y;
+			lastPosX = (int) x;
+			lastPosY = (int) y;
 		} else {
 			if (y > screen.getHeight() / 2) {
 				y = 0;

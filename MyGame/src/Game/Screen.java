@@ -1,6 +1,7 @@
 package Game;
 
 import Entities.Player;
+import Sprites.PlayerSprite;
 
 public class Screen {
 
@@ -109,23 +110,26 @@ public class Screen {
 		}
 	}
 
-	public void renderPlayer(int color, int x, int y, Player p, int xs, int xe,
-			int ys, int ye, boolean colision) {
+	public void renderImg(int color, int x, int y, Player p, PlayerSprite s,
+			int w, int h, boolean colision) {
 		this.p = p;
-		for (int xb = xs; xb <= xe; xb++) {
-			for (int yb = ys; yb <= ye; yb++) {
-				if (colision) {
-					Colision(x + xb, y + yb, color);
-				}
-				pixels[x + xb + (y + yb) * width] = color;
-				if (!p.a.contains(x + xb + (y + yb) * width)) {
-					p.a.set(aIndex, x + xb + (y + yb) * width);
-					aIndex++;
-				}
-				if (aIndex > 1000) {
-					aIndex = 0;
+		for (int xb = 0; xb < w; xb++) {
+			for (int yb = 0; yb < h; yb++) {
+				if (s.pixels[xb + yb * w] == -16777216) {
+					if (colision) {
+						Colision(x + xb, y + yb, color);
+					}
+					pixels[x + xb + (y + yb) * width] = color;
+					if (!p.a.contains(x + xb + (y + yb) * width)) {
+						p.a.set(aIndex, x + xb + (y + yb) * width);
+						aIndex++;
+					}
+					if (aIndex > 1000) {
+						aIndex = 0;
+					}
 				}
 			}
 		}
 	}
+
 }
