@@ -112,7 +112,9 @@ public class Screen {
 
 	public void renderImg(int color, int x, int y, Player p, Sprite s, int w,
 			int h, boolean colision) {
-		this.p = p;
+		if (p != null) {
+			this.p = p;
+		}
 		for (int xb = 0; xb < w; xb++) {
 			for (int yb = 0; yb < h; yb++) {
 				if (s.pixels[xb + yb * w] == -16777216) {
@@ -120,16 +122,17 @@ public class Screen {
 						Colision(x + xb, y + yb, color);
 					}
 					pixels[x + xb + (y + yb) * width] = color;
-					if (!p.a.contains(x + xb + (y + yb) * width)) {
-						p.a.set(aIndex, x + xb + (y + yb) * width);
-						aIndex++;
-					}
-					if (aIndex > 1000) {
-						aIndex = 0;
+					if (p != null) {
+						if (!p.a.contains(x + xb + (y + yb) * width)) {
+							p.a.set(aIndex, x + xb + (y + yb) * width);
+							aIndex++;
+						}
+						if (aIndex > 1000) {
+							aIndex = 0;
+						}
 					}
 				}
 			}
 		}
 	}
-
 }
