@@ -62,7 +62,7 @@ public class Player {
 
 	public void render() {
 		if (timer > gap || !colision) {
-			screen.renderImg(0x000000, lastPosX, lastPosY, this, playerS,
+			screen.renderPlayer(0x000000, lastPosX, lastPosY, this, playerS,
 					playerS.w, playerS.h, colision);
 			if (timer > gap + 15) {
 				timer = 0;
@@ -70,8 +70,8 @@ public class Player {
 			}
 		}
 		if (y >= 0 && y + 8 < screen.getHeight() - 1) {
-			screen.renderImg(color, (int) x, (int) y, this, playerS, playerS.w,
-					playerS.h, colision);
+			screen.renderPlayer(color, (int) x, (int) y, this, playerS,
+					playerS.w, playerS.h, colision);
 			lastPosX = (int) x;
 			lastPosY = (int) y;
 		} else {

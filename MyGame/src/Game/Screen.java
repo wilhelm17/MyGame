@@ -36,41 +36,11 @@ public class Screen {
 		pixels[x + y * width] = color;
 	}
 
-	public boolean isFreePosition(int x, int y) {
-		if (x + 8 + (y + 8) * width > pixels.length) {
-			return false;
-		}
-		for (int xb = 2; xb <= 5; xb++) {
-			for (int yb = 0; yb <= 1; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
-					return false;
-				}
-			}
-		}
-		for (int xb = 1; xb <= 6; xb++) {
-			for (int yb = 1; yb <= 2; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
-					return false;
-				}
-			}
-		}
-		for (int xb = 0; xb <= 7; xb++) {
-			for (int yb = 2; yb <= 5; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
-					return false;
-				}
-			}
-		}
-		for (int xb = 1; xb <= 6; xb++) {
-			for (int yb = 5; yb <= 6; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
-					return false;
-				}
-			}
-		}
-		for (int xb = 2; xb <= 5; xb++) {
-			for (int yb = 6; yb <= 7; yb++) {
-				if (pixels[x + xb + (y + yb) * width] != 0x000000) {
+	public boolean isFreePosition(int x, int y, Sprite s) {
+		for (int xb = 0; xb < s.w; xb++) {
+			for (int yb = 0; yb < s.h; yb++) {
+				if (s.pixels[xb + yb * s.w] == -16777216
+						&& pixels[x + xb + (y + yb) * width] != 0x000000) {
 					return false;
 				}
 			}
@@ -110,11 +80,9 @@ public class Screen {
 		}
 	}
 
-	public void renderImg(int color, int x, int y, Player p, Sprite s, int w,
-			int h, boolean colision) {
-		if (p != null) {
-			this.p = p;
-		}
+	public void renderPlayer(int color, int x, int y, Player p, Sprite s,
+			int w, int h, boolean colision) {
+		this.p = p;
 		for (int xb = 0; xb < w; xb++) {
 			for (int yb = 0; yb < h; yb++) {
 				if (s.pixels[xb + yb * w] == -16777216) {
@@ -122,14 +90,12 @@ public class Screen {
 						Colision(x + xb, y + yb, color);
 					}
 					pixels[x + xb + (y + yb) * width] = color;
-					if (p != null) {
-						if (!p.a.contains(x + xb + (y + yb) * width)) {
-							p.a.set(aIndex, x + xb + (y + yb) * width);
-							aIndex++;
-						}
-						if (aIndex > 1000) {
-							aIndex = 0;
-						}
+					if (!p.a.contains(x + xb + (y + yb) * width)) {
+						p.a.set(aIndex, x + xb + (y + yb) * width);
+						aIndex++;
+					}
+					if (aIndex > 1000) {
+						aIndex = 0;
 					}
 				}
 			}

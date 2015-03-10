@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 
 import Entities.Player;
 import Input.Keyboard;
+import Sprites.PlayerSprite;
+import Sprites.Sprite;
 
 public class Game extends Canvas implements Runnable {
 
@@ -41,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 	private static Screen screen;
 	int fps;
 	int respawncount = 0;
+	static Sprite playerS = new PlayerSprite();
 
 	private BufferedImage img = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -128,7 +131,7 @@ public class Game extends Canvas implements Runnable {
 		while (x == 0 && y == 0) {
 			x = (int) (Math.random() * (width - 400) + 200);
 			y = (int) (Math.random() * (height - 400) + 200);
-			if (!screen.isFreePosition(x, y)) {
+			if (!screen.isFreePosition(x, y, playerS)) {
 				x = 0;
 				y = 0;
 			}
@@ -231,6 +234,7 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] args) {
 
 		Game game = new Game();
+		playerS.load();
 		frm = new JFrame();
 		frm.add(game);
 		frm.setUndecorated(true);
