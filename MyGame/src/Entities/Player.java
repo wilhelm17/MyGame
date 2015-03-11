@@ -78,7 +78,7 @@ public class Player {
 			if (y > screen.getHeight() / 2) {
 				y = 0;
 			} else {
-				y = screen.getHeight() - 18;
+				y = screen.getHeight() - 17;
 			}
 		}
 	}
