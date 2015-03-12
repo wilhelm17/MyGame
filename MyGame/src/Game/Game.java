@@ -29,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 			/ scale;
 
 	private static Thread thread;
-	public static boolean running = false;
+	public static boolean running = false, end = false, respawnrunning = false;
 	private Keyboard key;
 	private static JFrame frm;
 	int playercount = 2;
@@ -118,7 +118,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		if (!key.pause) {
+		if (!key.pause || end) {
 			p[0].update(key.left1, key.right1);
 			p[1].update(key.left2, key.right2);
 			crash();
@@ -184,6 +184,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				s = "";
 				crashcounter = 0;
+				respawnrunning = false;
 			}
 		}, 3 * 1000);
 		s = "3";
@@ -220,13 +221,25 @@ public class Game extends Canvas implements Runnable {
 
 	public void crash() {
 		for (int i = 0; i < playercount; i++) {
+			if (p[i].points >= playercount * 2) {
+				end = true;
+				for (int k = 0; k < playercount; k++) {
+					p[k].render = false;
+				}
+				screen.clear();
+				s = "Player " + (i + 1) + " wins!";
+			}
 			if (!p[i].moving && !crash[i]) {
 				crashcounter++;
 				crash[i] = true;
+				p[i].points += crashcounter;
+				System.out.println((i + 1) + " added " + crashcounter
+						+ " points, Player points: " + p[i].points);
 			}
 		}
-		if (playercount - crashcounter == 1 || playercount - crashcounter == 0) {
-			crashcounter = playercount + 1;
+		if (playercount - crashcounter == 1 && !respawnrunning
+				|| playercount - crashcounter == 0 && !respawnrunning) {
+			respawnrunning = true;
 			respawn();
 		}
 	}
