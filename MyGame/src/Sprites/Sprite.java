@@ -14,8 +14,7 @@ public class Sprite {
 	public void load() {
 		try {
 			setPath();
-			BufferedImage img = ImageIO.read(PlayerSprite.class
-					.getResource(path));
+			BufferedImage img = ImageIO.read(Sprite.class.getResource(path));
 			w = img.getWidth();
 			h = img.getHeight();
 			pixels = new int[w * h];

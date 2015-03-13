@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private static JFrame frm;
 	int playercount = 2;
-	boolean[] crash = new boolean[playercount];
+	int[] crash = new int[playercount * 2];
 	int crashcounter = 0;
 	Player[] p = new Player[playercount];
 	int[] spawn = new int[3];
@@ -179,10 +179,25 @@ public class Game extends Canvas implements Runnable {
 					spawn = createRandomSpawn();
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
-					crash[i] = false;
+					crash[i * 2] = 0;
+					p[i].points += crash[(i * 2) + 1];
+					crash[(i * 2) + 1] = 0;
+					if (p[i].points >= playercount * 5) {
+						end = true;
+						int winner = -1;
+						for (int k = 0; k < playercount; k++) {
+							if (p[k].points > winner) {
+								winner = k;
+							}
+							p[k].render = false;
+						}
+						s = "Player " + (winner + 1) + " wins!";
+					}
 					screen.clear();
 				}
-				s = "";
+				if (s.equals("1")) {
+					s = "";
+				}
 				crashcounter = 0;
 				respawnrunning = false;
 			}
@@ -221,25 +236,20 @@ public class Game extends Canvas implements Runnable {
 
 	public void crash() {
 		for (int i = 0; i < playercount; i++) {
-			if (p[i].points >= playercount * 2) {
-				end = true;
-				for (int k = 0; k < playercount; k++) {
-					p[k].render = false;
-				}
-				screen.clear();
-				s = "Player " + (i + 1) + " wins!";
-			}
-			if (!p[i].moving && !crash[i]) {
+			if (!p[i].moving && crash[i * 2] == 0) {
 				crashcounter++;
-				crash[i] = true;
-				p[i].points += crashcounter;
-				System.out.println((i + 1) + " added " + crashcounter
-						+ " points, Player points: " + p[i].points);
+				crash[i * 2] = 1;
+				crash[(i * 2) + 1] = crashcounter;
 			}
 		}
 		if (playercount - crashcounter == 1 && !respawnrunning
 				|| playercount - crashcounter == 0 && !respawnrunning) {
 			respawnrunning = true;
+			for (int i = 0; i < playercount; i++) {
+				if (p[i].moving) {
+					crash[(i * 2) + 1] = playercount;
+				}
+			}
 			respawn();
 		}
 	}
