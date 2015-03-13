@@ -184,9 +184,9 @@ public class Game extends Canvas implements Runnable {
 					crash[(i * 2) + 1] = 0;
 					if (p[i].points >= playercount * 5) {
 						end = true;
-						int winner = -1;
+						int winner = 0;
 						for (int k = 0; k < playercount; k++) {
-							if (p[k].points > winner) {
+							if (p[k].points > p[winner].points) {
 								winner = k;
 							}
 							p[k].render = false;
