@@ -71,16 +71,22 @@ public class Player {
 					gap = (int) (Math.random() * (250 - 150) + 150);
 				}
 			}
-			if (y >= 0 && y + 8 < screen.getHeight() - 1) {
+			if (y >= 0 && y + 8 < screen.getHeight() - 1 && x >= 0
+					&& x + 8 < screen.getWidth() - 1) {
 				screen.renderPlayer(color, (int) x, (int) y, this, playerS,
 						playerS.w, playerS.h, colision);
 				lastPosX = (int) x;
 				lastPosY = (int) y;
 			} else {
-				if (y > screen.getHeight() / 2) {
+				if (y > screen.getHeight() - 1) {
 					y = 0;
-				} else {
+				} else if (y < 0) {
 					y = screen.getHeight() - 17;
+				}
+				if (x > screen.getWidth() - 1) {
+					x = 0;
+				} else if (x < 0) {
+					x = screen.getWidth() - 17;
 				}
 			}
 		}
