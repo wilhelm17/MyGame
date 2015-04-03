@@ -10,7 +10,7 @@ import Sprites.Sprite;
 public class Player {
 
 	Screen screen;
-	int color;
+	public int color;
 	double x, y;
 	double alpha = 0;
 	double beta = 0;

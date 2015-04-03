@@ -29,7 +29,7 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
-//		border();
+		border();
 	}
 
 	public void renderPixel(int x, int y, int color) {

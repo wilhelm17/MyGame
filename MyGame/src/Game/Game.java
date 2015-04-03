@@ -176,12 +176,12 @@ public class Game extends Canvas implements Runnable {
 			public void run() {
 				screen.clear();
 				for (int i = 0; i < playercount; i++) {
+					p[i].points += crash[(i * 2) + 1];
+					crash[(i * 2) + 1] = 0;
 					spawn = createRandomSpawn();
 					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
 					crash[i * 2] = 0;
-					p[i].points += crash[(i * 2) + 1];
-					crash[(i * 2) + 1] = 0;
 					if (p[i].points >= playercount * 5) {
 						end = true;
 						int winner = 0;
@@ -231,6 +231,12 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(Color.white);
 			g.setFont(new Font("Arial", 0, 100));
 			g.drawString(s, width / 2, height / 2);
+		}
+		for (int i = 0; i < playercount; i++) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Arial", 0, 20));
+			g.drawString("Player " + (i + 1) + ": " + p[i].points, 20,
+					(50 + i * 20));
 		}
 	}
 
