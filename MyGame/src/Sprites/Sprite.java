@@ -11,9 +11,12 @@ public class Sprite {
 	public int w, h;
 	public int[] pixels;
 
+	public Sprite(String path) {
+		setPath(path);
+	}
+
 	public void load() {
 		try {
-			setPath();
 			BufferedImage img = ImageIO.read(Sprite.class.getResource(path));
 			w = img.getWidth();
 			h = img.getHeight();
@@ -24,6 +27,7 @@ public class Sprite {
 		}
 	}
 
-	public void setPath() {
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

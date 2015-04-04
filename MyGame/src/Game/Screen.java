@@ -29,7 +29,7 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
-		border();
+		border(true);
 	}
 
 	public void renderPixel(int x, int y, int color) {
@@ -48,25 +48,30 @@ public class Screen {
 		return true;
 	}
 
-	public void border() {
-		for (int i = 0; i < width * 2; i++) {
-			pixels[i] = 0xffffff;
+	public void border(boolean b) {
+		int color = 0x000000;
+		if (b) {
+			color = 0xffffff;
 		}
-		for (int i = (height - 2) * width; i < (height - 0) * width; i++) {
-			pixels[i] = 0xffffff;
+		for (int y = 0; y < 4; y++) {
+			for (int x = 0; x < width; x++) {
+				pixels[x + y * width] = color;
+			}
 		}
-
-		for (int i = 0; i < pixels.length; i += width) {
-			pixels[i] = 0xffffff;
+		for (int y = height - 4; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				pixels[x + y * width] = color;
+			}
 		}
-		for (int i = 1; i < pixels.length; i += width) {
-			pixels[i] = 0xffffff;
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < 4; x++) {
+				pixels[x + y * width] = color;
+			}
 		}
-		for (int i = width - 1; i < pixels.length; i += width) {
-			pixels[i] = 0xffffff;
-		}
-		for (int i = width - 2; i < pixels.length; i += width) {
-			pixels[i] = 0xffffff;
+		for (int y = 0; y < height; y++) {
+			for (int x = width - 4; x < width; x++) {
+				pixels[x + y * width] = color;
+			}
 		}
 	}
 

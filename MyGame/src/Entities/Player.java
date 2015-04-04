@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Game.Screen;
 import Input.Keyboard;
-import Sprites.PlayerSprite;
 import Sprites.Sprite;
 
 public class Player {
@@ -17,10 +16,10 @@ public class Player {
 	public boolean moving = true, render = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
 	public int lastPosX, lastPosY;
-	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
+	int timer = 0, speed = 2, gap = (int) (Math.random() * (250 - 150) + 150);
 	boolean colision = true;
 	Keyboard key;
-	Sprite playerS = new PlayerSprite();
+	Sprite playerS = new Sprite("/Player.png");
 	public int points = 0;
 
 	public Player(int color, Screen screen, Keyboard key) {
@@ -33,7 +32,7 @@ public class Player {
 		playerS.load();
 	}
 
-	public void setSpawn(int x, int y, int alpha) {
+	public void setPosition(int x, int y, int alpha) {
 		this.x = x;
 		this.y = y;
 		this.alpha = alpha;
@@ -52,8 +51,8 @@ public class Player {
 				}
 			}
 			beta = Math.toRadians(alpha);
-			y += 2 * Math.sin(beta);
-			x += 2 * Math.cos(beta);
+			y += speed * Math.sin(beta);
+			x += speed * Math.cos(beta);
 		}
 	}
 

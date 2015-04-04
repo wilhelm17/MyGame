@@ -16,7 +16,6 @@ import javax.swing.JFrame;
 
 import Entities.Player;
 import Input.Keyboard;
-import Sprites.PlayerSprite;
 import Sprites.Sprite;
 
 public class Game extends Canvas implements Runnable {
@@ -43,7 +42,7 @@ public class Game extends Canvas implements Runnable {
 	private static Screen screen;
 	int fps;
 	int respawncount = 0;
-	static Sprite playerS = new PlayerSprite();
+	static Sprite playerS = new Sprite("/Player.png");
 
 	private BufferedImage img = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -59,7 +58,7 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < playercount; i++) {
 			p[i] = new Player(createRandomColor(), screen, key);
 			spawn = createRandomSpawn();
-			p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
+			p[i].setPosition(spawn[0], spawn[1], spawn[2]);
 		}
 		this.setFocusable(true);
 		this.requestFocus();
@@ -179,7 +178,7 @@ public class Game extends Canvas implements Runnable {
 					p[i].points += crash[(i * 2) + 1];
 					crash[(i * 2) + 1] = 0;
 					spawn = createRandomSpawn();
-					p[i].setSpawn(spawn[0], spawn[1], spawn[2]);
+					p[i].setPosition(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
 					crash[i * 2] = 0;
 					if (p[i].points >= playercount * 5) {
