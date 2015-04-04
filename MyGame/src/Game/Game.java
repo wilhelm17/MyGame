@@ -40,6 +40,7 @@ public class Game extends Canvas implements Runnable {
 	String s = "";
 	Graphics g;
 	private static Screen screen;
+	private Effects eff;
 	int fps;
 	int respawncount = 0;
 	static Sprite playerS = new Sprite("/Player.png");
@@ -60,6 +61,7 @@ public class Game extends Canvas implements Runnable {
 			spawn = createRandomSpawn();
 			p[i].setPosition(spawn[0], spawn[1], spawn[2]);
 		}
+		eff = new Effects(p, screen);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);

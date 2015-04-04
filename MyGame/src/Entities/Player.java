@@ -32,10 +32,18 @@ public class Player {
 		playerS.load();
 	}
 
-	public void setPosition(int x, int y, int alpha) {
+	public void setPosition(double x, double y, int alpha) {
 		this.x = x;
 		this.y = y;
 		this.alpha = alpha;
+	}
+
+	public double[] getPosition() {
+		double i[] = new double[3];
+		i[0] = x;
+		i[1] = y;
+		i[2] = alpha;
+		return i;
 	}
 
 	public void update(boolean left, boolean right) {
