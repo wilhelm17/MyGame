@@ -1,5 +1,6 @@
 package Game;
 
+import Entities.Item;
 import Entities.Player;
 import Sprites.Sprite;
 
@@ -9,12 +10,15 @@ public class Screen {
 	public int[] pixels;
 	int aIndex = 0;
 	Player p;
+	Effects eff;
+	Item i;
 
-	public Screen(int width, int height) {
+	public Screen(int width, int height, Effects eff) {
 
 		this.width = width;
 		this.height = height;
 		pixels = new int[width * height];
+		this.eff = eff;
 	}
 
 	public int getWidth() {
@@ -78,7 +82,15 @@ public class Screen {
 	public void Colision(int x, int y, int color) {
 		if (pixels[x + y * width] != 0x000000 && color != 0x000000) {
 			if (pixels[x + y * width] != color) {
-				p.moving = false;
+				if (pixels[x + y * width] == 16711680) {
+					eff.getItem(x, y);
+				} else if (pixels[x + y * width] == 65280) {
+					eff.getItem(x, y);
+				} else if (pixels[x + y * width] == 255) {
+					eff.getItem(x, y);
+				} else {
+					p.moving = false;
+				}
 			} else if (!p.a.contains(x + y * width)) {
 				p.moving = false;
 			}
@@ -102,6 +114,16 @@ public class Screen {
 					if (aIndex > 1000) {
 						aIndex = 0;
 					}
+				}
+			}
+		}
+	}
+
+	public void renderItem(int color, int x, int y, Sprite s, int w, int h) {
+		for (int xb = 0; xb < w; xb++) {
+			for (int yb = 0; yb < h; yb++) {
+				if (s.pixels[xb + yb * w] == -16777216) {
+					pixels[x + xb + (y + yb) * width] = color;
 				}
 			}
 		}

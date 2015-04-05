@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
-		screen = new Screen(width, height);
+		screen = new Screen(width, height, eff);
 		key = new Keyboard();
 		for (int i = 0; i < playercount; i++) {
 			p[i] = new Player(createRandomColor(), screen, key);
@@ -122,6 +122,7 @@ public class Game extends Canvas implements Runnable {
 		if (!key.pause || end) {
 			p[0].update(key.left1, key.right1);
 			p[1].update(key.left2, key.right2);
+			eff.update();
 			crash();
 		}
 	}
