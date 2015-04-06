@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,12 +18,34 @@ public class Effects {
 	String[] path = { "/ItemBigger.png", "/ItemBorder.png", "/ItemSwap.png",
 			"/Itemx05.png", "/Itemx2.png" };
 	boolean[] blueItem = { false, true, true, false, false };
-	Item[] i = new Item[5];
-	int itemIndex = 0;
+	boolean all;
+	ArrayList<Item> i = new ArrayList<Item>();
 
 	public Effects(Player[] p, Screen s) {
 		this.p = p;
 		this.s = s;
+	}
+
+	public void bigger(Player pl, boolean all) {
+		if (all) {
+			for (int i = 0; i < p.length; i++) {
+				if (p[i] != pl) {
+					p[i].playerS.setPath("/Player2.png");
+					p[i].playerS.load();
+				}
+			}
+		} else {
+			pl.playerS.setPath("/Player2.png");
+			pl.playerS.load();
+		}
+		timer.schedule(new TimerTask() {
+			public void run() {
+				for (int i = 0; i < p.length; i++) {
+					p[i].playerS.setPath("/Player.png");
+					p[i].playerS.load();
+				}
+			}
+		}, 10 * 1000);
 	}
 
 	public void border() {
@@ -45,7 +68,45 @@ public class Effects {
 					p[i].setColision(true);
 				}
 			}
-		}, 2);
+		}, 10);
+	}
+
+	public void x05(Player pl, boolean all) {
+		if (all) {
+			for (int i = 0; i < p.length; i++) {
+				if (p[i] != pl) {
+					p[i].speed = 0.5;
+				}
+			}
+		} else {
+			pl.speed = 0.5;
+		}
+		timer.schedule(new TimerTask() {
+			public void run() {
+				for (int i = 0; i < p.length; i++) {
+					p[i].speed = 1;
+				}
+			}
+		}, 10 * 1000);
+	}
+
+	public void x2(Player pl, boolean all) {
+		if (all) {
+			for (int i = 0; i < p.length; i++) {
+				if (p[i] != pl) {
+					p[i].speed = 2;
+				}
+			}
+		} else {
+			pl.speed = 2;
+		}
+		timer.schedule(new TimerTask() {
+			public void run() {
+				for (int i = 0; i < p.length; i++) {
+					p[i].speed = 1;
+				}
+			}
+		}, 10 * 1000);
 	}
 
 	public void update() {
@@ -53,8 +114,10 @@ public class Effects {
 			t = 0;
 			if (Math.random() > 0.5) {
 				color = 0x00ff00;
+				all = true;
 			} else {
 				color = 0xff0000;
+				all = false;
 			}
 			int p = (int) (Math.random() * 5);
 			if (blueItem[p]) {
@@ -62,25 +125,17 @@ public class Effects {
 			}
 			sprite = new Sprite(path[p]);
 			sprite.load();
-			if (itemIndex > 4) {
-				itemIndex = 0;
-			}
-			if (i[itemIndex] != null) {
-				i[itemIndex].delete();
-			}
-			i[itemIndex] = new Item(sprite, s, color);
-			itemIndex++;
+			i.add(new Item(sprite, s, color, all, this));
 		}
 		t++;
 	}
 
 	public Item getItem(int x, int y) {
-		for (int k = 0; k < 5; k++) {
+		for (int k = 0; k < i.size(); k++) {
 			for (int xx = 0; xx < 64; xx++) {
 				for (int yy = 0; yy < 64; yy++) {
-					if (i[k].x + xx == x && i[k].y + yy == y) {
-						return i[k];
-
+					if (i.get(k).x + xx == x && i.get(k).y + yy == y) {
+						return i.get(k);
 					}
 				}
 			}

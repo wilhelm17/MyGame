@@ -16,10 +16,11 @@ public class Player {
 	public boolean moving = true, render = true;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
 	public int lastPosX, lastPosY;
-	int timer = 0, speed = 2, gap = (int) (Math.random() * (250 - 150) + 150);
+	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
+	public double speed = 1;
 	boolean colision = true;
 	Keyboard key;
-	Sprite playerS = new Sprite("/Player.png");
+	public Sprite playerS = new Sprite("/Player.png");
 	public int points = 0;
 
 	public Player(int color, Screen screen, Keyboard key) {
@@ -52,10 +53,10 @@ public class Player {
 			if (left && right) {
 			} else {
 				if (left) {
-					alpha -= 2.5;
+					alpha -= 1.2;
 				}
 				if (right) {
-					alpha += 2.5;
+					alpha += 1.2;
 				}
 			}
 			beta = Math.toRadians(alpha);
@@ -73,7 +74,7 @@ public class Player {
 			if (timer > gap || !colision) {
 				screen.renderPlayer(0x000000, lastPosX, lastPosY, this,
 						playerS, playerS.w, playerS.h, colision);
-				if (timer > gap + 15) {
+				if (timer > gap + 30) {
 					timer = 0;
 					gap = (int) (Math.random() * (250 - 150) + 150);
 				}

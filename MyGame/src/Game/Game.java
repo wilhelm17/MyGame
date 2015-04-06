@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
-		screen = new Screen(width, height, eff);
+		screen = new Screen(width, height);
 		key = new Keyboard();
 		for (int i = 0; i < playercount; i++) {
 			p[i] = new Player(createRandomColor(), screen, key);
@@ -62,6 +62,7 @@ public class Game extends Canvas implements Runnable {
 			p[i].setPosition(spawn[0], spawn[1], spawn[2]);
 		}
 		eff = new Effects(p, screen);
+		screen.setEff(eff);
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -90,7 +91,7 @@ public class Game extends Canvas implements Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
-		final double ns = 1000000000.0 / 60.0;
+		final double ns = 1000000000.0 / 120.0;
 		double delta = 0;
 		int frames = 0;
 		int updates = 0;

@@ -13,11 +13,14 @@ public class Screen {
 	Effects eff;
 	Item i;
 
-	public Screen(int width, int height, Effects eff) {
+	public Screen(int width, int height) {
 
 		this.width = width;
 		this.height = height;
 		pixels = new int[width * height];
+	}
+
+	public void setEff(Effects eff) {
 		this.eff = eff;
 	}
 
@@ -33,6 +36,7 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
+		eff.i.clear();
 		border(true);
 	}
 
@@ -83,11 +87,17 @@ public class Screen {
 		if (pixels[x + y * width] != 0x000000 && color != 0x000000) {
 			if (pixels[x + y * width] != color) {
 				if (pixels[x + y * width] == 16711680) {
-					eff.getItem(x, y);
+					i = eff.getItem(x, y);
+					i.initEff(p);
+					i.delete();
 				} else if (pixels[x + y * width] == 65280) {
-					eff.getItem(x, y);
+					i = eff.getItem(x, y);
+					i.initEff(p);
+					i.delete();
 				} else if (pixels[x + y * width] == 255) {
-					eff.getItem(x, y);
+					i = eff.getItem(x, y);
+					i.initEff(p);
+					i.delete();
 				} else {
 					p.moving = false;
 				}
