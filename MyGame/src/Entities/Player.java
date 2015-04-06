@@ -27,7 +27,7 @@ public class Player {
 		this.color = color;
 		this.screen = screen;
 		this.key = key;
-		for (int i = 0; i <= 1000; i++) {
+		for (int i = 0; i <= 2000; i++) {
 			a.add(0);
 		}
 		playerS.load();
@@ -79,8 +79,8 @@ public class Player {
 					gap = (int) (Math.random() * (250 - 150) + 150);
 				}
 			}
-			if (y >= 0 && y + 8 < screen.getHeight() - 1 && x >= 0
-					&& x + 8 < screen.getWidth() - 1) {
+			if (y >= 0 && y + playerS.h < screen.getHeight() - 1 && x >= 0
+					&& x + playerS.w < screen.getWidth() - 1) {
 				screen.renderPlayer(color, (int) x, (int) y, this, playerS,
 						playerS.w, playerS.h, colision);
 				lastPosX = (int) x;
@@ -89,12 +89,12 @@ public class Player {
 				if (y > screen.getHeight() - 1) {
 					y = 0;
 				} else if (y < 0) {
-					y = screen.getHeight() - 17;
+					y = screen.getHeight() - (playerS.h * 2 + 1);
 				}
 				if (x > screen.getWidth() - 1) {
 					x = 0;
 				} else if (x < 0) {
-					x = screen.getWidth() - 17;
+					x = screen.getWidth() - (playerS.w * 2 + 1);
 				}
 			}
 		}

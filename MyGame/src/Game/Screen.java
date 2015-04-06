@@ -121,7 +121,7 @@ public class Screen {
 						p.a.set(aIndex, x + xb + (y + yb) * width);
 						aIndex++;
 					}
-					if (aIndex > 1000) {
+					if (aIndex > 2000) {
 						aIndex = 0;
 					}
 				}

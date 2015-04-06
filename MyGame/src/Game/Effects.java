@@ -16,8 +16,8 @@ public class Effects {
 	Timer timer = new Timer();
 	int t = 0, color = 0x000000;
 	String[] path = { "/ItemBigger.png", "/ItemBorder.png", "/ItemSwap.png",
-			"/Itemx05.png", "/Itemx2.png" };
-	boolean[] blueItem = { false, true, true, false, false };
+			"/Itemx05.png", "/Itemx2.png", "/ItemColision.png" };
+	boolean[] blueItem = { false, true, true, false, false, false };
 	boolean all;
 	ArrayList<Item> i = new ArrayList<Item>();
 
@@ -119,7 +119,7 @@ public class Effects {
 				color = 0xff0000;
 				all = false;
 			}
-			int p = (int) (Math.random() * 5);
+			int p = (int) (Math.random() * path.length);
 			if (blueItem[p]) {
 				color = 0x0000ff;
 			}
@@ -141,5 +141,24 @@ public class Effects {
 			}
 		}
 		return null;
+	}
+
+	public void colision(Player pl, boolean all) {
+		if (all) {
+			for (int i = 0; i < p.length; i++) {
+				if (p[i] != pl) {
+					p[i].setColision(false);
+				}
+			}
+		} else {
+			pl.setColision(false);
+		}
+		timer.schedule(new TimerTask() {
+			public void run() {
+				for (int i = 0; i < p.length; i++) {
+					p[i].setColision(true);
+				}
+			}
+		}, 10 * 1000);
 	}
 }

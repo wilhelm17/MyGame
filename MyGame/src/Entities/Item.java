@@ -11,6 +11,7 @@ public class Item {
 	Effects eff;
 	public int x = 0;
 	public int y = 0;
+	int tries = 0;
 	public boolean all;
 
 	public Item(Sprite s, Screen screen, int color, boolean all, Effects eff) {
@@ -18,15 +19,18 @@ public class Item {
 		this.s = s;
 		this.eff = eff;
 		this.all = all;
-		while (x == 0 && y == 0) {
+		while (x == 0 && y == 0 && tries < 200) {
 			x = (int) (Math.random() * (screen.width - 69) + 4);
 			y = (int) (Math.random() * (screen.height - 69) + 4);
 			if (!screen.isFreePosition(x, y, s)) {
 				x = 0;
 				y = 0;
+				tries++;
 			}
 		}
-		sc.renderItem(color, x, y, s, 64, 64);
+		if (x != 0) {
+			sc.renderItem(color, x, y, s, 64, 64);
+		}
 	}
 
 	public void delete() {
@@ -48,6 +52,9 @@ public class Item {
 		}
 		if (s.getPath() == "/Itemx2.png") {
 			eff.x2(p, all);
+		}
+		if (s.getPath() == "/ItemColision.png") {
+			eff.colision(p, all);
 		}
 	}
 }
