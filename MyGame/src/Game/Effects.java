@@ -29,7 +29,7 @@ public class Effects {
 	public void bigger(Player pl, boolean all) {
 		if (all) {
 			for (int i = 0; i < p.length; i++) {
-				if (p[i] != pl) {
+				if (p[i] != pl && p[i].moving) {
 					p[i].playerS.setPath("/Player2.png");
 					p[i].playerS.load();
 				}

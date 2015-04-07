@@ -29,9 +29,9 @@ public class Game extends Canvas implements Runnable {
 
 	private static Thread thread;
 	public static boolean running = false, end = false, respawnrunning = false;
-	private Keyboard key;
+	private static Keyboard key;
 	private static JFrame frm;
-	int playercount = 3;
+	int playercount = 2;
 	int[] crash = new int[playercount * 2];
 	int crashcounter = 0;
 	Player[] p = new Player[playercount];
@@ -44,6 +44,7 @@ public class Game extends Canvas implements Runnable {
 	int fps;
 	int respawncount = 0;
 	static Sprite playerS = new Sprite("/Player.png");
+	static Menu m;
 
 	private BufferedImage img = new BufferedImage(width, height,
 			BufferedImage.TYPE_INT_RGB);
@@ -52,15 +53,13 @@ public class Game extends Canvas implements Runnable {
 
 	public Game() {
 
-		Dimension size = new Dimension(width * scale, height * scale);
-		setPreferredSize(size);
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		for (int i = 0; i < playercount; i++) {
-			p[i] = new Player(createRandomColor(), screen, key);
-			spawn = createRandomSpawn();
-			p[i].setPosition(spawn[0], spawn[1], spawn[2]);
-		}
+		 for (int i = 0; i < playercount; i++) {
+		 p[i] = new Player(createRandomColor(), screen, key);
+		 spawn = createRandomSpawn();
+		 p[i].setPosition(spawn[0], spawn[1], spawn[2]);
+		 }
 		eff = new Effects(p, screen);
 		screen.setEff(eff);
 		this.setFocusable(true);
@@ -69,7 +68,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public synchronized void start() {
-
+		m = null;
 		running = true;
 		thread = new Thread(this, "Display");
 		thread.start();
@@ -120,12 +119,14 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		if (!key.pause || end) {
+		if (!key.pause && p[0] != null || end) {
 			p[0].update(key.left1, key.right1);
 			p[1].update(key.left2, key.right2);
-			p[2].update(key.left3, key.right3);
 			eff.update();
 			crash();
+		}
+		if (m != null) {
+			m.update(this);
 		}
 	}
 
@@ -156,11 +157,13 @@ public class Game extends Canvas implements Runnable {
 			createBufferStrategy(3);
 			return;
 		}
-		if (key.clear) {
-			screen.clear();
+		if (m != null) {
+			m.render();
 		}
-		for (int i = 0; i < playercount; i++) {
-			p[i].render();
+		if (p[0] != null) {
+			for (int i = 0; i < playercount; i++) {
+				p[i].render();
+			}
 		}
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
@@ -236,11 +239,13 @@ public class Game extends Canvas implements Runnable {
 			g.setFont(new Font("Arial", 0, 100));
 			g.drawString(s, width / 2, height / 2);
 		}
-		for (int i = 0; i < playercount; i++) {
-			g.setColor(Color.white);
-			g.setFont(new Font("Arial", 0, 20));
-			g.drawString("Player " + (i + 1) + ": " + p[i].points, 20,
-					(50 + i * 20));
+		if (p[0] != null) {
+			for (int i = 0; i < playercount; i++) {
+				g.setColor(Color.white);
+				g.setFont(new Font("Arial", 0, 20));
+				g.drawString("Player " + (i + 1) + ": " + p[i].points, 20,
+						(50 + i * 20));
+			}
 		}
 	}
 
@@ -271,11 +276,14 @@ public class Game extends Canvas implements Runnable {
 		frm = new JFrame();
 		frm.add(game);
 		frm.setUndecorated(true);
+		Dimension size = new Dimension(width * scale, height * scale);
+		frm.setPreferredSize(size);
 		frm.pack();
 		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frm.setLocationRelativeTo(null);
 		frm.setVisible(true);
 		game.start();
 		screen.clear();
+//		m = new Menu(screen, width, height, key);
 	}
 }

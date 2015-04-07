@@ -36,7 +36,7 @@ public class Screen {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
-		eff.i.clear();
+		// eff.i.clear();
 		border(true);
 	}
 
@@ -83,7 +83,7 @@ public class Screen {
 		}
 	}
 
-	public void Colision(int x, int y, int color) {
+	public void Colision(int x, int y, boolean colision, int color) {
 		if (pixels[x + y * width] != 0x000000 && color != 0x000000) {
 			if (pixels[x + y * width] != color) {
 				if (pixels[x + y * width] == 16711680) {
@@ -99,10 +99,14 @@ public class Screen {
 					i.initEff(p);
 					i.delete();
 				} else {
-					p.moving = false;
+					if (colision) {
+						p.moving = false;
+					}
 				}
 			} else if (!p.a.contains(x + y * width)) {
-				p.moving = false;
+				if (colision) {
+					p.moving = false;
+				}
 			}
 		}
 	}
@@ -113,9 +117,7 @@ public class Screen {
 		for (int xb = 0; xb < w; xb++) {
 			for (int yb = 0; yb < h; yb++) {
 				if (s.pixels[xb + yb * w] == -16777216) {
-					if (colision) {
-						Colision(x + xb, y + yb, color);
-					}
+					Colision(x + xb, y + yb, colision, color);
 					pixels[x + xb + (y + yb) * width] = color;
 					if (!p.a.contains(x + xb + (y + yb) * width)) {
 						p.a.set(aIndex, x + xb + (y + yb) * width);
