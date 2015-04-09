@@ -32,11 +32,13 @@ public class Screen {
 		return height;
 	}
 
-	public void clear() {
+	public void clear(boolean b) {
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = 0x000000;
 		}
-		// eff.i.clear();
+		if (b) {
+			eff.i.clear();
+		}
 		border(true);
 	}
 

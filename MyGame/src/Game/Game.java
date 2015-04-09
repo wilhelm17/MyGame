@@ -29,18 +29,19 @@ public class Game extends Canvas implements Runnable {
 
 	private static Thread thread;
 	public static boolean running = false, end = false, respawnrunning = false;
+	static boolean mm = false;
 	private static Keyboard key;
 	private static JFrame frm;
-	int playercount = 2;
-	int[] crash = new int[playercount * 2];
+	public int playercount = 0, rounds = 0;
+	int[] crash;
 	int crashcounter = 0;
-	Player[] p = new Player[playercount];
+	public Player[] p;
 	int[] spawn = new int[3];
 	Timer timer = new Timer();
-	String s = "";
+	String s = "", playercountString = "X", roundsString = "X";
 	Graphics g;
 	private static Screen screen;
-	private Effects eff;
+	public Effects eff;
 	int fps;
 	int respawncount = 0;
 	static Sprite playerS = new Sprite("/Player.png");
@@ -55,23 +56,17 @@ public class Game extends Canvas implements Runnable {
 
 		screen = new Screen(width, height);
 		key = new Keyboard();
-		 for (int i = 0; i < playercount; i++) {
-		 p[i] = new Player(createRandomColor(), screen, key);
-		 spawn = createRandomSpawn();
-		 p[i].setPosition(spawn[0], spawn[1], spawn[2]);
-		 }
-		eff = new Effects(p, screen);
-		screen.setEff(eff);
+		key.g = this;
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
 	}
 
 	public synchronized void start() {
-		m = null;
 		running = true;
 		thread = new Thread(this, "Display");
 		thread.start();
+		m = null;
 
 	}
 
@@ -119,14 +114,15 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		if (!key.pause && p[0] != null || end) {
-			p[0].update(key.left1, key.right1);
-			p[1].update(key.left2, key.right2);
+		if (!key.pause && m == null && mm || end) {
+			for (int i = 0; i < playercount; i++) {
+				p[i].update(key.playerkeys[i * 2], key.playerkeys[(i * 2) + 1]);
+			}
 			eff.update();
 			crash();
 		}
 		if (m != null) {
-			m.update(this);
+			m.update();
 		}
 	}
 
@@ -160,7 +156,7 @@ public class Game extends Canvas implements Runnable {
 		if (m != null) {
 			m.render();
 		}
-		if (p[0] != null) {
+		if (m == null) {
 			for (int i = 0; i < playercount; i++) {
 				p[i].render();
 			}
@@ -181,7 +177,7 @@ public class Game extends Canvas implements Runnable {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				screen.clear();
+				screen.clear(true);
 				for (int i = 0; i < playercount; i++) {
 					p[i].points += crash[(i * 2) + 1];
 					crash[(i * 2) + 1] = 0;
@@ -189,7 +185,7 @@ public class Game extends Canvas implements Runnable {
 					p[i].setPosition(spawn[0], spawn[1], spawn[2]);
 					p[i].moving = true;
 					crash[i * 2] = 0;
-					if (p[i].points >= playercount * 5) {
+					if (p[i].points >= playercount * rounds) {
 						end = true;
 						int winner = 0;
 						for (int k = 0; k < playercount; k++) {
@@ -200,7 +196,7 @@ public class Game extends Canvas implements Runnable {
 						}
 						s = "Player " + (winner + 1) + " wins!";
 					}
-					screen.clear();
+					screen.clear(true);
 				}
 				if (s.equals("1")) {
 					s = "";
@@ -239,13 +235,19 @@ public class Game extends Canvas implements Runnable {
 			g.setFont(new Font("Arial", 0, 100));
 			g.drawString(s, width / 2, height / 2);
 		}
-		if (p[0] != null) {
+		if (p != null) {
 			for (int i = 0; i < playercount; i++) {
 				g.setColor(Color.white);
 				g.setFont(new Font("Arial", 0, 20));
 				g.drawString("Player " + (i + 1) + ": " + p[i].points, 20,
 						(50 + i * 20));
 			}
+		}
+		if (m != null && m.settings) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Impact", 0, 30));
+			g.drawString(playercountString, width / 2 + 100, height / 2 - 65);
+			g.drawString(roundsString, width / 2 + 100, height / 2 + 10);
 		}
 	}
 
@@ -283,7 +285,8 @@ public class Game extends Canvas implements Runnable {
 		frm.setLocationRelativeTo(null);
 		frm.setVisible(true);
 		game.start();
-		screen.clear();
-//		m = new Menu(screen, width, height, key);
+		screen.clear(false);
+		m = new Menu(screen, width, height, key, game);
+		mm = true;
 	}
 }

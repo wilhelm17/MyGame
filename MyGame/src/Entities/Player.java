@@ -13,7 +13,7 @@ public class Player {
 	double x, y;
 	double alpha = 0;
 	double beta = 0;
-	public boolean moving = true, render = true;
+	public boolean moving = true, render = false;
 	public ArrayList<Integer> a = new ArrayList<Integer>();
 	public int lastPosX, lastPosY;
 	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
