@@ -36,6 +36,7 @@ public class Game extends Canvas implements Runnable {
 	int[] crash;
 	int crashcounter = 0;
 	public Player[] p;
+	public String[] playerC;
 	int[] spawn = new int[3];
 	Timer timer = new Timer();
 	String s = "", playercountString = "X", roundsString = "X";
@@ -70,16 +71,6 @@ public class Game extends Canvas implements Runnable {
 
 	}
 
-	public synchronized static void stop() {
-
-		running = false;
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-		}
-
-	}
-
 	int ups;
 
 	public void run() {
@@ -109,12 +100,11 @@ public class Game extends Canvas implements Runnable {
 				updates = 0;
 			}
 		}
-		stop();
 	}
 
 	public void update() {
 		key.update();
-		if (!key.pause && m == null && mm || end) {
+		if (!key.pause && p != null || end) {
 			for (int i = 0; i < playercount; i++) {
 				p[i].update(key.playerkeys[i * 2], key.playerkeys[(i * 2) + 1]);
 			}
@@ -173,7 +163,7 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 
-	public void respawn() {
+	public void respawn(Game game) {
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -194,7 +184,15 @@ public class Game extends Canvas implements Runnable {
 							}
 							p[k].render = false;
 						}
+						eff = null;
+						p = null;
 						s = "Player " + (winner + 1) + " wins!";
+						timer.schedule(new TimerTask() {
+							@Override
+							public void run() {
+								m = new Menu(screen, width, height, key, game);
+							}
+						}, 10 * 1000);
 					}
 					screen.clear(true);
 				}
@@ -249,6 +247,14 @@ public class Game extends Canvas implements Runnable {
 			g.drawString(playercountString, width / 2 + 100, height / 2 - 65);
 			g.drawString(roundsString, width / 2 + 100, height / 2 + 10);
 		}
+		if (m != null && m.colorCreation && m.colorCounter < playercount) {
+			g.setColor(Color.white);
+			g.setFont(new Font("Impact", 0, 30));
+			String ss = new Integer(m.colorCounter + 1).toString();
+			g.drawString(ss, width / 2 - 60, height / 2 + 10);
+			g.drawString(playerC[m.colorCounter], width / 2 + 170,
+					height / 2 + 10);
+		}
 	}
 
 	public void crash() {
@@ -267,7 +273,7 @@ public class Game extends Canvas implements Runnable {
 					crash[(i * 2) + 1] = playercount;
 				}
 			}
-			respawn();
+			respawn(this);
 		}
 	}
 

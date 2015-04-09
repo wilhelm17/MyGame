@@ -11,7 +11,8 @@ public class Keyboard implements KeyListener {
 	private boolean[] keys = new boolean[65536];
 	private boolean[] tkeys = new boolean[65536];
 	private boolean[] dkeys = new boolean[65536];
-	public boolean k1, k2, k3, k4, k5, k6, k7, k8, k9, k0;
+	public boolean k1, k2, k3, k4, k5, k6, k7, k8, k9, k0, ka, kb, kc, kd, ke,
+			kf;
 	public boolean fps, esc, start, pause, swap;
 	public boolean up, down, enter, back, tab;
 	public boolean playerkeys[];
@@ -33,6 +34,12 @@ public class Keyboard implements KeyListener {
 		k7 = keys[KeyEvent.VK_7];
 		k8 = keys[KeyEvent.VK_8];
 		k9 = keys[KeyEvent.VK_9];
+		ka = keys[KeyEvent.VK_A];
+		kb = keys[KeyEvent.VK_B];
+		kc = keys[KeyEvent.VK_C];
+		kd = keys[KeyEvent.VK_D];
+		ke = keys[KeyEvent.VK_E];
+		kf = keys[KeyEvent.VK_F];
 		up = dkeys[KeyEvent.VK_UP];
 		dkeys[KeyEvent.VK_UP] = false;
 		down = dkeys[KeyEvent.VK_DOWN];
