@@ -28,7 +28,9 @@ public class Game extends Canvas implements Runnable {
 			/ scale;
 
 	private static Thread thread;
-	public static boolean running = false, end = false, respawnrunning = false;
+	public static boolean running = false;
+	public boolean end = false;
+	public static boolean respawnrunning = false;
 	static boolean mm = false;
 	private static Keyboard key;
 	private static JFrame frm;
@@ -39,10 +41,11 @@ public class Game extends Canvas implements Runnable {
 	public String[] playerC;
 	int[] spawn = new int[3];
 	Timer timer = new Timer();
-	String s = "", playercountString = "X", roundsString = "X";
+	String s = " ", playercountString = "X", roundsString = "X";
 	Graphics g;
 	private static Screen screen;
 	public Effects eff;
+	static MusicPlayer mp;
 	int fps;
 	int respawncount = 0;
 	static Sprite playerS = new Sprite("/Player.png");
@@ -104,12 +107,16 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		if (!key.pause && p != null || end) {
+		if (!key.pause && p != null && !end) {
 			for (int i = 0; i < playercount; i++) {
 				p[i].update(key.playerkeys[i * 2], key.playerkeys[(i * 2) + 1]);
 			}
-			eff.update();
-			crash();
+			if (eff != null) {
+				eff.update();
+			}
+			if (p != null) {
+				crash();
+			}
 		}
 		if (m != null) {
 			m.update();
@@ -146,7 +153,7 @@ public class Game extends Canvas implements Runnable {
 		if (m != null) {
 			m.render();
 		}
-		if (m == null) {
+		if (m == null && !end) {
 			for (int i = 0; i < playercount; i++) {
 				p[i].render();
 			}
@@ -185,11 +192,13 @@ public class Game extends Canvas implements Runnable {
 							p[k].render = false;
 						}
 						eff = null;
-						p = null;
 						s = "Player " + (winner + 1) + " wins!";
 						timer.schedule(new TimerTask() {
 							@Override
 							public void run() {
+								mp.stop();
+								p = null;
+								s = "";
 								m = new Menu(screen, width, height, key, game);
 							}
 						}, 10 * 1000);
@@ -233,7 +242,7 @@ public class Game extends Canvas implements Runnable {
 			g.setFont(new Font("Arial", 0, 100));
 			g.drawString(s, width / 2, height / 2);
 		}
-		if (p != null) {
+		if (p != null && !end) {
 			for (int i = 0; i < playercount; i++) {
 				g.setColor(Color.white);
 				g.setFont(new Font("Arial", 0, 20));
@@ -280,6 +289,9 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String[] args) {
 
 		Game game = new Game();
+		mp = new MusicPlayer();
+		Thread t = new Thread(mp);
+		t.start();
 		playerS.load();
 		frm = new JFrame();
 		frm.add(game);

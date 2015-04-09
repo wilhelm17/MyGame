@@ -24,6 +24,8 @@ public class Menu {
 	Sprite tipp1S = new Sprite("/tipp1.png");
 	Sprite tipp2S = new Sprite("/tipp2.png");
 	Sprite colorCreationS = new Sprite("/colorCreation.png");
+	Sprite musicS = new Sprite("/music.png");
+	Sprite music2S = new Sprite("/music2.png");
 	int startColor, settingsColor, exitColor, playerNumberColor, roundsColor,
 			backColor;
 	Keyboard key;
@@ -46,6 +48,8 @@ public class Menu {
 		tipp1S.load();
 		tipp2S.load();
 		colorCreationS.load();
+		musicS.load();
+		music2S.load();
 		startColor = 0x808080;
 		settingsColor = 0x6400FF;
 		exitColor = 0xffffff;
@@ -53,6 +57,7 @@ public class Menu {
 		roundsColor = 0xffffff;
 		backColor = 0xffffff;
 		game = g;
+		game.end = false;
 	}
 
 	public void update() {
@@ -198,6 +203,7 @@ public class Menu {
 	private void mainHUB() {
 		if (key.enter) {
 			if (startColor == 0x6400FF) {
+				Game.mp.start(true);
 				game.p = new Player[game.playercount];
 				for (int i = 0; i < game.playercount; i++) {
 					int hexInt = Long.decode(game.playerC[i]).intValue();
@@ -355,6 +361,10 @@ public class Menu {
 					settingsS, 200, 50);
 			sc.renderItem(exitColor, width / 2 - 100, height / 2 + 50, exitS,
 					200, 50);
+			sc.renderItem(0xffffff, width - music2S.w - 4, height - music2S.h
+					- musicS.h - 4, music2S, music2S.w, music2S.h);
+			sc.renderItem(0xffffff, width - musicS.w - 4,
+					height - musicS.h - 4, musicS, musicS.w, musicS.h);
 		} else if (settings) {
 			sc.renderItem(playerNumberColor, width / 2 - 100, height / 2 - 100,
 					playerNumberS, 200, 50);
