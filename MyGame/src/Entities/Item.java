@@ -56,5 +56,8 @@ public class Item {
 		if (s.getPath() == "/ItemColision.png") {
 			eff.colision(p, all);
 		}
+		if (s.getPath() == "/KeySwap.png") {
+			eff.keySwap(p, all);
+		}
 	}
 }

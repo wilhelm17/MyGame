@@ -19,6 +19,7 @@ public class Player {
 	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
 	public double speed = 1;
 	boolean colision = true;
+	public boolean inverted = false;
 	Keyboard key;
 	public Sprite playerS = new Sprite("/Player.png");
 	public int points = 0;
@@ -50,7 +51,13 @@ public class Player {
 	public void update(boolean left, boolean right) {
 		timer++;
 		if (moving) {
-			if (left && right) {
+			if (inverted) {
+				if (right) {
+					alpha -= 1.2;
+				}
+				if (left) {
+					alpha += 1.2;
+				}
 			} else {
 				if (left) {
 					alpha -= 1.2;

@@ -220,7 +220,7 @@ public class Menu {
 					}
 				}, 100);
 				game.crash = new int[game.playercount * 2];
-				game.eff = new Effects(game.p, sc);
+				game.eff = new Effects(game.p, sc, key);
 				sc.setEff(game.eff);
 				game.start();
 				sc.clear(false);
