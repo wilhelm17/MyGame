@@ -11,6 +11,11 @@ public class MusicPlayer implements Runnable {
 	private AudioInputStream audio;
 	private Clip clip;
 
+	public MusicPlayer() {
+		Thread t = new Thread(this);
+		t.start();
+	}
+
 	public void run() {
 		loadClip("/Monkeys_Spinning_Monkeys.wav");
 	}

@@ -9,9 +9,11 @@ import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import Entities.Player;
@@ -31,7 +33,6 @@ public class Game extends Canvas implements Runnable {
 	public static boolean running = false;
 	public boolean end = false;
 	public static boolean respawnrunning = false;
-	static boolean mm = false;
 	private static Keyboard key;
 	private static JFrame frm;
 	public int playercount = 0, rounds = 0;
@@ -61,6 +62,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		key = new Keyboard();
 		key.g = this;
+		playerS.load();
 		this.setFocusable(true);
 		this.requestFocus();
 		addKeyListener(key);
@@ -68,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 
 	public synchronized void start() {
 		running = true;
-		thread = new Thread(this, "Display");
+		thread = new Thread(this, "GameLoop");
 		thread.start();
 		m = null;
 
@@ -137,9 +139,9 @@ public class Game extends Canvas implements Runnable {
 		return new int[] { x, y, alpha };
 	}
 
-	public int createRandomColor() {
-		int color = (int) (Math.random() * 0xFFFFFF);
-		return color;
+	public String createRandomColor() {
+		Integer color = (int) (Math.random() * 0xFFFFFF);
+		return color.toString();
 	}
 
 	public void render() {
@@ -250,7 +252,21 @@ public class Game extends Canvas implements Runnable {
 						(50 + i * 20));
 			}
 		}
+		if (m != null && m.mainHUB) {
+			BufferedImage img;
+			try {
+				img = ImageIO.read(Game.class.getResource("/LineHunter.png"));
+				g.drawImage(img, width / 2 - 300, 4, null);
+			} catch (IOException e) {
+			}
+		}
 		if (m != null && m.settings) {
+			BufferedImage img;
+			try {
+				img = ImageIO.read(Game.class.getResource("/LineHunter.png"));
+				g.drawImage(img, width / 2 - 300, 4, null);
+			} catch (IOException e) {
+			}
 			g.setColor(Color.white);
 			g.setFont(new Font("Impact", 0, 30));
 			g.drawString(playercountString, width / 2 + 100, height / 2 - 65);
@@ -290,21 +306,16 @@ public class Game extends Canvas implements Runnable {
 
 		Game game = new Game();
 		mp = new MusicPlayer();
-		Thread t = new Thread(mp);
-		t.start();
-		playerS.load();
 		frm = new JFrame();
 		frm.add(game);
 		frm.setUndecorated(true);
 		Dimension size = new Dimension(width * scale, height * scale);
 		frm.setPreferredSize(size);
 		frm.pack();
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frm.setLocationRelativeTo(null);
 		frm.setVisible(true);
 		game.start();
 		screen.clear(false);
 		m = new Menu(screen, width, height, key, game);
-		mm = true;
 	}
 }

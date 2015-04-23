@@ -85,7 +85,7 @@ public class Screen {
 		}
 	}
 
-	public void Colision(int x, int y, boolean colision, int color) {
+	public void Collision(int x, int y, boolean collision, int color) {
 		if (pixels[x + y * width] != 0x000000 && color != 0x000000) {
 			if (pixels[x + y * width] != color) {
 				if (pixels[x + y * width] == 16711680) {
@@ -101,12 +101,12 @@ public class Screen {
 					i.initEff(p);
 					i.delete();
 				} else {
-					if (colision) {
+					if (collision) {
 						p.moving = false;
 					}
 				}
 			} else if (!p.a.contains(x + y * width)) {
-				if (colision) {
+				if (collision) {
 					p.moving = false;
 				}
 			}
@@ -114,12 +114,12 @@ public class Screen {
 	}
 
 	public void renderPlayer(int color, int x, int y, Player p, Sprite s,
-			int w, int h, boolean colision) {
+			int w, int h, boolean collision) {
 		this.p = p;
 		for (int xb = 0; xb < w; xb++) {
 			for (int yb = 0; yb < h; yb++) {
 				if (s.pixels[xb + yb * w] == -16777216) {
-					Colision(x + xb, y + yb, colision, color);
+					Collision(x + xb, y + yb, collision, color);
 					pixels[x + xb + (y + yb) * width] = color;
 					if (!p.a.contains(x + xb + (y + yb) * width)) {
 						p.a.set(aIndex, x + xb + (y + yb) * width);

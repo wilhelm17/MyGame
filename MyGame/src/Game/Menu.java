@@ -24,10 +24,11 @@ public class Menu {
 	Sprite tipp1S = new Sprite("/tipp1.png");
 	Sprite tipp2S = new Sprite("/tipp2.png");
 	Sprite colorCreationS = new Sprite("/colorCreation.png");
+	Sprite colorCreation2S = new Sprite("/colorCreation2.png");
 	Sprite musicS = new Sprite("/music.png");
 	Sprite music2S = new Sprite("/music2.png");
 	int startColor, settingsColor, exitColor, playerNumberColor, roundsColor,
-			backColor;
+			backColor, color, color2;
 	Keyboard key;
 	Timer timer = new Timer();
 	public int colorCounter = 0;
@@ -48,6 +49,7 @@ public class Menu {
 		tipp1S.load();
 		tipp2S.load();
 		colorCreationS.load();
+		colorCreation2S.load();
 		musicS.load();
 		music2S.load();
 		startColor = 0x808080;
@@ -56,6 +58,8 @@ public class Menu {
 		playerNumberColor = 0x6400FF;
 		roundsColor = 0xffffff;
 		backColor = 0xffffff;
+		color = 0x6400FF;
+		color2 = 0xffffff;
 		game = g;
 		game.end = false;
 	}
@@ -259,94 +263,106 @@ public class Menu {
 		}
 		if (colorCreation) {
 			if (colorCounter < game.playercount) {
+				if (key.up) {
+					color2 = 0xffffff;
+					color = 0x6400FF;
+				}
+				if (key.down) {
+					color = 0xffffff;
+					color2 = 0x6400FF;
+				}
 				if (key.enter) {
-					if (game.playerC[colorCounter] == "X") {
-						game.playerC[colorCounter] = "";
-					}
-					if (key.back) {
-						game.playerC[colorCounter] = "";
-					}
-					if (key.tab && game.playerC[colorCounter].length() == 6
-							&& !game.playerC[colorCounter].equals("000000")
-							&& !game.playerC[colorCounter].equals("ffffff")
-							&& !game.playerC[colorCounter].equals("ff0000")
-							&& !game.playerC[colorCounter].equals("00ff00")
-							&& !game.playerC[colorCounter].equals("0000ff")) {
-						colorCounter++;
-						if (colorCounter >= game.playercount) {
-							for (int i = 0; i < game.playercount; i++) {
-								game.playerC[i] = "0x" + game.playerC[i];
-							}
-							colorCreation = false;
-							colorCounter = 0;
-							playerCreation = false;
-							sc.clear(false);
-							settings = true;
+					if (color == 0x6400FF) {
+						if (game.playerC[colorCounter] == "X") {
+							game.playerC[colorCounter] = "";
 						}
-					}
-					if (key.k0 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "0";
-					}
-					if (key.k1 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "1";
-					}
-					if (key.k2 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "2";
-					}
-					if (key.k3 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "3";
-					}
-					if (key.k4 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "4";
-					}
-					if (key.k5 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "5";
-					}
-					if (key.k6 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "6";
-					}
-					if (key.k7 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "7";
-					}
-					if (key.k8 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "8";
-					}
-					if (key.k9 && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "9";
-					}
-					if (key.ka && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "a";
-					}
-					if (key.kb && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "b";
-					}
-					if (key.kc && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "c";
-					}
-					if (key.kd && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "d";
-					}
-					if (key.ke && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "e";
-					}
-					if (key.kf && game.playerC[colorCounter].length() < 6) {
-						game.playerC[colorCounter] = game.playerC[colorCounter]
-								+ "f";
+						if (key.back) {
+							game.playerC[colorCounter] = "";
+						}
+						if (key.tab && game.playerC[colorCounter].length() >= 6
+								&& !game.playerC[colorCounter].equals("000000")
+								&& !game.playerC[colorCounter].equals("ffffff")
+								&& !game.playerC[colorCounter].equals("ff0000")
+								&& !game.playerC[colorCounter].equals("00ff00")
+								&& !game.playerC[colorCounter].equals("0000ff")) {
+							colorCounter++;
+							if (colorCounter >= game.playercount) {
+								for (int i = 0; i < game.playercount; i++) {
+									game.playerC[i] = "0x" + game.playerC[i];
+								}
+								colorCreation = false;
+								colorCounter = 0;
+								playerCreation = false;
+								sc.clear(false);
+								settings = true;
+							}
+						}
+						if (key.k0 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "0";
+						}
+						if (key.k1 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "1";
+						}
+						if (key.k2 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "2";
+						}
+						if (key.k3 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "3";
+						}
+						if (key.k4 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "4";
+						}
+						if (key.k5 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "5";
+						}
+						if (key.k6 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "6";
+						}
+						if (key.k7 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "7";
+						}
+						if (key.k8 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "8";
+						}
+						if (key.k9 && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "9";
+						}
+						if (key.ka && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "a";
+						}
+						if (key.kb && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "b";
+						}
+						if (key.kc && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "c";
+						}
+						if (key.kd && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "d";
+						}
+						if (key.ke && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "e";
+						}
+						if (key.kf && game.playerC[colorCounter].length() < 6) {
+							game.playerC[colorCounter] = game.playerC[colorCounter]
+									+ "f";
+						}
+					} else {
+						game.playerC[colorCounter] = game.createRandomColor();
 					}
 				}
 			}
@@ -380,8 +396,10 @@ public class Menu {
 			sc.renderItem(0xffffff, width / 2 - 300, height / 2 - 100,
 					playerCreationS, 600, 200);
 		} else if (colorCreation) {
-			sc.renderItem(0xffffff, width / 2 - 150, height / 2 - 25,
+			sc.renderItem(color, width / 2 - 150, height / 2 - 25,
 					colorCreationS, 300, 50);
+			sc.renderItem(color2, width / 2 - 100, height / 2 + 25,
+					colorCreation2S, 200, 50);
 		}
 	}
 }

@@ -89,7 +89,7 @@ public class Effects {
 
 	public void swap() {
 		for (int i = 0; i < p.length; i++) {
-			p[i].setColision(false);
+			p[i].setCollision(false);
 		}
 		double[] temp = p[0].getPosition();
 		for (int i = 0; i < p.length - 1; i++) {
@@ -100,7 +100,7 @@ public class Effects {
 		timer.schedule(new TimerTask() {
 			public void run() {
 				for (int i = 0; i < p.length; i++) {
-					p[i].setColision(true);
+					p[i].setCollision(true);
 				}
 			}
 		}, 30);
@@ -182,16 +182,16 @@ public class Effects {
 		if (all) {
 			for (int i = 0; i < p.length; i++) {
 				if (p[i] != pl) {
-					p[i].setColision(false);
+					p[i].setCollision(false);
 				}
 			}
 		} else {
-			pl.setColision(false);
+			pl.setCollision(false);
 		}
 		timer.schedule(new TimerTask() {
 			public void run() {
 				for (int i = 0; i < p.length; i++) {
-					p[i].setColision(true);
+					p[i].setCollision(true);
 				}
 			}
 		}, 10 * 1000);

@@ -18,7 +18,7 @@ public class Player {
 	public int lastPosX, lastPosY;
 	int timer = 0, gap = (int) (Math.random() * (250 - 150) + 150);
 	public double speed = 1;
-	boolean colision = true;
+	boolean collision = true;
 	public boolean inverted = false;
 	Keyboard key;
 	public Sprite playerS = new Sprite("/Player.png");
@@ -72,15 +72,15 @@ public class Player {
 		}
 	}
 
-	public void setColision(boolean b) {
-		this.colision = b;
+	public void setCollision(boolean b) {
+		this.collision = b;
 	}
 
 	public void render() {
 		if (render) {
-			if (timer > gap || !colision) {
+			if (timer > gap || !collision) {
 				screen.renderPlayer(0x000000, lastPosX, lastPosY, this,
-						playerS, playerS.w, playerS.h, colision);
+						playerS, playerS.w, playerS.h, collision);
 				if (timer > gap + 30) {
 					timer = 0;
 					gap = (int) (Math.random() * (250 - 150) + 150);
@@ -89,7 +89,7 @@ public class Player {
 			if (y >= 0 && y + playerS.h < screen.getHeight() - 1 && x >= 0
 					&& x + playerS.w < screen.getWidth() - 1) {
 				screen.renderPlayer(color, (int) x, (int) y, this, playerS,
-						playerS.w, playerS.h, colision);
+						playerS.w, playerS.h, collision);
 				lastPosX = (int) x;
 				lastPosY = (int) y;
 			} else {
